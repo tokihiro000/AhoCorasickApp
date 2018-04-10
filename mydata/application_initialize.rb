@@ -329,8 +329,8 @@ public
 end
 
 $ahoCorasick = AhoCorasick.new
-$ahoCorasick.Build 'ab', 'bc', 'bab', 'd', 'abcde'
-# ahoCorasick.BuildFromFile 'number.txt'
+# $ahoCorasick.Build 'ab', 'bc', 'bab', 'd', 'abcde'
+$ahoCorasick.BuildFromFile 'mydata/number.txt'
 # ahoCorasick.PrintTri
 # ahoCorasick.Save
 # now1 = Time.ne  w;
@@ -338,7 +338,7 @@ $ahoCorasick.Build 'ab', 'bc', 'bab', 'd', 'abcde'
 # ahoCorasick.Load
 # now2 = Time.new;
 # p now2
-# p ahoCorasick.Search "abduction"
+p $ahoCorasick.Search "100010"
 # now3 = Time.new;
 # p now3
 # ahoCorasick.PrintTri
