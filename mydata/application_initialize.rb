@@ -289,6 +289,40 @@ public
     end
   end
 
+  def GetNearStr target
+    search_node = @root_node
+
+    index = 0
+    length = target.length
+    while index < length
+      char = target[index]
+      edge = search_node.getEdge char
+
+      if edge == nil
+        break
+      else
+        search_node = edge.next_node
+        index += 1
+      end
+    end
+
+    result_set = Set.new
+    word = search_node.word
+    result_set.add word if word.length != 0
+
+    count = 0
+    search_node.getEdges.each do |next_edge|
+      word = next_edge.next_node.word
+      next if word.length == 0
+
+      count += 1
+      result_set.add word
+      break if count == 5
+    end
+
+    return result_set.to_a.sort
+  end
+
   def Search target
     result_set = Set.new
     search_node = @root_node
@@ -329,8 +363,8 @@ public
 end
 
 $ahoCorasick = AhoCorasick.new
-$ahoCorasick.Build 'ab', 'bc', 'bab', 'd', 'abcde'
-# $ahoCorasick.BuildFromFile 'mydata/number.txt'
+# $ahoCorasick.Build 'ab', 'bc', 'bab', 'd', 'abcde'
+$ahoCorasick.BuildFromFile 'mydata/input.txt'
 # ahoCorasick.PrintTri
 # ahoCorasick.Save
 # now1 = Time.ne  w;
@@ -338,7 +372,7 @@ $ahoCorasick.Build 'ab', 'bc', 'bab', 'd', 'abcde'
 # ahoCorasick.Load
 # now2 = Time.new;
 # p now2
-p $ahoCorasick.Search "100010"
+p $ahoCorasick.GetNearStr "za"
 # now3 = Time.new;
 # p now3
 # ahoCorasick.PrintTri

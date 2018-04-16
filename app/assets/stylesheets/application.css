@@ -13,3 +13,55 @@
  *= require_tree .
  *= require_self
  */
+ ul, ol {
+   padding: 0;
+   position: relative;
+ }
+
+ ul li, ol li {
+   color: #2d8fdd;
+   border-left: solid 6px #2d8fdd;/*左側の線*/
+   background: #f1f8ff;/*背景色*/
+   margin-bottom: 3px;/*下のバーとの余白*/
+  	line-height: 1.5;
+   	padding: 0.5em;
+   list-style-type: none!important;/*ポチ消す*/
+ }
+
+#keyword {
+  border:0;
+  padding:10px;
+  font-size:1.3em;
+  font-family:Arial, sans-serif;
+  color:#aaa;
+  border:solid 1px #ccc;
+  margin:0 0 20px;
+  width:300px;
+
+  /* Rounded Corners */
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+
+  /* Shadow Inset */
+  -moz-box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+  -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: inner 0 0 4px rgba(0, 0, 0, 0.2);
+
+  /* Shadow Inset - Top */
+  -moz-box-shadow: inset 1px 4px 9px -6px rgba(0,0,0,0.5);
+  -webkit-box-shadow: inset 1px 4px 9px -6px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 4px 9px -6px rgba(0,0,0,0.5);
+
+  /* White Shadow - Bottom - Rounded Corners */
+  -webkit-box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+  -moz-box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+input:focus {
+    border:solid 1px #EEA34A;
+}
