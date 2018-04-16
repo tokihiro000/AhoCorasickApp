@@ -329,8 +329,8 @@ public
 end
 
 $ahoCorasick = AhoCorasick.new
-# $ahoCorasick.Build 'ab', 'bc', 'bab', 'd', 'abcde'
-$ahoCorasick.BuildFromFile 'mydata/number.txt'
+$ahoCorasick.Build 'ab', 'bc', 'bab', 'd', 'abcde'
+# $ahoCorasick.BuildFromFile 'mydata/number.txt'
 # ahoCorasick.PrintTri
 # ahoCorasick.Save
 # now1 = Time.ne  w;
