@@ -1,0 +1,7 @@
+<% if @failure_data != nil %>
+  <ul>
+    <% @failure_data.each do |str| %>
+    <li><%= str %></li>
+    <% end %>
+  </ul>
+<% end %>

@@ -11,7 +11,9 @@ class TrietreeController < ApplicationController
       keyword = params[:keyword]
 
       $request_keyword = keyword
-      @data = $ahoCorasick.GetNearStr keyword
+      list = $ahoCorasick.GetNearStr keyword
+      @data = list[0]
+      @failure_data = list[1]
       if @data.size > 0
         render
       else

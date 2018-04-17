@@ -307,36 +307,57 @@ public
     end
 
     result_set = Set.new
+    failure_set = Set.new
     word = search_node.word
     result_set.add word if word.length != 0
 
     next_edge_list = []
+    failure_edge_list = []
+    if search_node.failureNode != nil
+      failure_set.add search_node.failureNode.word if search_node.failureNode.word.length != 0
+      failure_edge_list = failure_edge_list | search_node.failureNode.getEdges
+    end
+
     count = 0
     search_node.getEdges.each do |next_edge|
       next_node = next_edge.next_node
-      word = next_node.word
+      failure_node = next_node.failureNode
+      failure_set.add failure_node.word if failure_node.word.length != 0
+
+      # failure_edge_list = failure_edge_list | failure_node.getEdges
       next_edge_list = next_edge_list | next_node.getEdges
-      next if word.length == 0
-
-      count += 1
-      result_set.add word
-      break if count == 10
-    end
-
-    if count >= 10
-      return result_set.to_a.sort
-    end
-
-    next_edge_list.each do |next_edge|
-      next_node = next_edge.next_node
       word = next_node.word
       next if word.length == 0
+
       count += 1
       result_set.add word
       break if count == 10
     end
 
-    return result_set.to_a.sort
+    if count < 10
+      next_edge_list.each do |next_edge|
+        next_node = next_edge.next_node
+        word = next_node.word
+        next if word.length == 0
+        count += 1
+        result_set.add word
+        break if count == 10
+      end
+    end
+
+    failure_count = failure_set.size
+    if failure_count < 5
+      failure_edge_list.each do |failure_edge|
+        next_node = failure_edge.next_node
+        word = next_node.word
+        next if word.length == 0
+        failure_count += 1
+        failure_set.add word
+        break if failure_count == 5
+      end
+    end
+
+    return [result_set.to_a.sort, failure_set.to_a.sort]
   end
 
   def Search target
