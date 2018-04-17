@@ -1,6 +1,9 @@
-<h1>トライ木を使った文字列予測</h1>
+<h1>AhoCorasickを使った文字列予測</h1>
 <%= form_tag({:controller => 'trietree', :action => 'near'}, :remote => true, :class => 'form-ajax') do -%>
 <%= hidden_field_tag :ajax_handler, 'key_request' -%>
 <%= text_field_tag :keyword %>
 <%= submit_tag('send', :class => 'btn btn-primary btn-sm', :type => 'hidden', :id => 'submit_btn') -%>
 <% end %>
+
+<div id="ajax-response-wrapper"></div>
+<div id="ajax-response-wrapper-aho"></div>

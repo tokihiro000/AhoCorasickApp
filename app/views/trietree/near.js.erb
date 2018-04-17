@@ -4,3 +4,10 @@ if ($('#ajax-response-wrapper').size() === 0) {
   $('#ajax-response-wrapper').html('');
 }
 $('#ajax-response-wrapper').html('<%=j render partial: "ajax_container", collections: @data %>');
+
+if ($('#ajax-response-wrapper-aho').size() === 0) {
+  $('body').append('<div id="ajax-response-wrapper-aho"></div>');
+} else {
+  $('#ajax-response-wrapper-aho').html('');
+}
+$('#ajax-response-wrapper-aho').html('<%=j render partial: "ajax_container", collections: @data %>');
