@@ -310,14 +310,30 @@ public
     word = search_node.word
     result_set.add word if word.length != 0
 
+    next_edge_list = []
     count = 0
     search_node.getEdges.each do |next_edge|
-      word = next_edge.next_node.word
+      next_node = next_edge.next_node
+      word = next_node.word
+      next_edge_list = next_edge_list | next_node.getEdges
       next if word.length == 0
 
       count += 1
       result_set.add word
-      break if count == 5
+      break if count == 10
+    end
+
+    if count >= 10
+      return result_set.to_a.sort
+    end
+
+    next_edge_list.each do |next_edge|
+      next_node = next_edge.next_node
+      word = next_node.word
+      next if word.length == 0
+      count += 1
+      result_set.add word
+      break if count == 10
     end
 
     return result_set.to_a.sort
