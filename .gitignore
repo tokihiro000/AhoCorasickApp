@@ -4,6 +4,7 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+.DS_Store
 # Ignore bundler config.
 /.bundle
 
@@ -31,3 +32,8 @@
 
 /mydata/number.txt
 /mydata/input.txt
+/mydata/out
+/mydata/download
+/mydata/config
+/mydata/*.json
+/public/download

@@ -24,9 +24,10 @@ class Edge
 end
 
 class Node
-  attr_accessor :word, :is_root, :node_number, :union_word_set
-  def initialize node_count
+  attr_accessor :word, :is_root, :node_number, :union_word_set, :value
+  def initialize node_count, value = {}
     @node_number = node_count
+    @value = value
     @edge_map = {}
     @word = ""
     @failure_node = nil
@@ -119,7 +120,7 @@ class AhoCorasick
   end
 
 private
-  def createTrie word
+  def createTrie word, value = {}
     before_node = @root_node
     word.each_char { |character|
       # 前ノードが次の文字へのエッジを持っているか確認
@@ -129,7 +130,7 @@ private
       if edge != nil
         next_node = edge.next_node
       else
-        next_node = Node.new $node_count
+        next_node = Node.new $node_count, value
         $node_count += 1
         edge = Edge.new character, before_node, next_node
         before_node.addEdge edge
@@ -207,6 +208,27 @@ public
         createTrie str
       end
     end
+    createFailure
+  end
+
+  def BuildFromJson(file_name)
+    json_data = open(file_name) do |io|
+      JSON.load(io)
+    end
+
+    count = 0
+    json_data.each do |resource_path, resource_info|
+      count += 1
+      if count % 100000 == 0
+        print "now_count: ", count, "\n"
+      end
+
+      resource_info["path"] = resource_path
+      resource_name_list = resource_path.split("/")
+      str = resource_name_list.last
+      createTrie str, resource_info
+    end
+
     createFailure
   end
 
@@ -318,30 +340,51 @@ public
       failure_edge_list = failure_edge_list | search_node.failureNode.getEdges
     end
 
-    count = 0
-    search_node.getEdges.each do |next_edge|
-      next_node = next_edge.next_node
+    start_time = Time.now
+    word_count = 0
+    next_edge_list = next_edge_list | search_node.getEdges
+    while next_edge_list.count != 0
+      edge = next_edge_list.pop
+      next_node = edge.next_node
       failure_node = next_node.failureNode
       failure_set.add failure_node.word if failure_node.word.length != 0
 
-      # failure_edge_list = failure_edge_list | failure_node.getEdges
-      next_edge_list = next_edge_list | next_node.getEdges
+      seartch_time = Time.now - start_time
+      if seartch_time > 1.0
+        puts "検索時間タイムアウト"
+        break
+      end
+
+      # 10個以上単語があるなら下のエッジ優先にする
+      tmp_next_edge_list = next_node.getEdges
+      tmp_edge_count = tmp_next_edge_list.count
+      if tmp_edge_count >= 10
+        next_edge_list = tmp_next_edge_list
+      else
+        tmp_next_edge_list.reverse_each do |edge|
+          next_edge_list.unshift edge
+        end
+      end
+
+      edge_count = next_edge_list.count
+      index_max = edge_count >= 10 ? 10 : edge_count
+      next_edge_list = next_edge_list[0, index_max]
       word = next_node.word
       next if word.length == 0
 
-      count += 1
+      word_count += 1
       result_set.add word
-      break if count == 10
+      break if word_count == 10
     end
 
-    if count < 10
+    if word_count < 10
       next_edge_list.each do |next_edge|
         next_node = next_edge.next_node
         word = next_node.word
         next if word.length == 0
-        count += 1
+        word_count += 1
         result_set.add word
-        break if count == 10
+        break if word_count == 10
       end
     end
 
@@ -401,7 +444,9 @@ end
 
 $ahoCorasick = AhoCorasick.new
 # $ahoCorasick.Build 'ab', 'bc', 'bab', 'd', 'abcde'
-$ahoCorasick.BuildFromFile 'mydata/input.txt'
+# $ahoCorasick.BuildFromFile 'mydata/input.txt'
+$ahoCorasick.BuildFromJson 'mydata/sample_json.json'
+
 # ahoCorasick.PrintTri
 # ahoCorasick.Save
 # now1 = Time.ne  w;
