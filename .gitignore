@@ -37,3 +37,4 @@
 /mydata/config
 /mydata/*.json
 /public/download
+/public/out

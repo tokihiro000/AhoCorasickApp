@@ -113,7 +113,6 @@ end
 
 class AhoCorasick
   def initialize
-    puts "initialize"
     @root_node = Node.new $node_count
     $node_count += 1
     @root_node.is_root = true
@@ -130,7 +129,7 @@ private
       if edge != nil
         next_node = edge.next_node
       else
-        next_node = Node.new $node_count, value
+        next_node = Node.new $node_count
         $node_count += 1
         edge = Edge.new character, before_node, next_node
         before_node.addEdge edge
@@ -141,6 +140,7 @@ private
 
     # 1ワード分終わったのでノードに対象ワードを設定する
     before_node.word = word
+    before_node.value = value
   end
 
   def createFailure
@@ -331,7 +331,10 @@ public
     result_set = Set.new
     failure_set = Set.new
     word = search_node.word
-    result_set.add word if word.length != 0
+    if word.length != 0
+      value = search_node.value
+      result_set.add ({ 'word' => word, 'zip' => value['z'], 'path' => value['path'] })
+    end
 
     next_edge_list = []
     failure_edge_list = []
@@ -373,19 +376,9 @@ public
       next if word.length == 0
 
       word_count += 1
-      result_set.add word
+      value = next_node.value
+      result_set.add ({ 'word' => word, 'zip' => value['z'], 'path' => value['path'] })
       break if word_count == 10
-    end
-
-    if word_count < 10
-      next_edge_list.each do |next_edge|
-        next_node = next_edge.next_node
-        word = next_node.word
-        next if word.length == 0
-        word_count += 1
-        result_set.add word
-        break if word_count == 10
-      end
     end
 
     failure_count = failure_set.size
@@ -400,7 +393,7 @@ public
       end
     end
 
-    return [result_set.to_a.sort, failure_set.to_a.sort]
+    return [result_set.to_a, failure_set.to_a]
   end
 
   def Search target

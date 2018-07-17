@@ -14,15 +14,15 @@
  *= require_self
  */
 #ajax-response-wrapper {
- display:inline-block;
+ display:block;
  vertical-align: top;
- width: 300px;
+ width: 1080px;
 }
 
 #ajax-response-wrapper-aho {
- display:inline-block;
+ display:block;
  vertical-align: top;
- width: 300px;
+ width: 1080px;
 }
 
  #ajax-response-wrapper > ul, ol {
@@ -30,15 +30,52 @@
    position: relative;
  }
 
- #ajax-response-wrapper > ul li, ol li {
+ #ajax-response-wrapper > ul li {
    color: #2d8fdd;
    border-left: solid 6px #2d8fdd;/*左側の線*/
    background: #f1f8ff;/*背景色*/
-   margin-bottom: 3px;/*下のバーとの余白*/
-  	line-height: 1.5;
-   	padding: 0.5em;
+   line-height: 1.5;
+   padding: 0.5em;
    list-style-type: none!important;/*ポチ消す*/
  }
+
+ #ajax-response-wrapper > ul > .title {
+   /* color: #2d8fdd;*/
+   /* border-left: solid 6px #2d8fdd; */
+   background: #afeeee;
+   margin-bottom: 0px;
+   /* line-height: 1.5; */
+   /* padding: 0.5em; */
+ }
+
+ #ajax-response-wrapper > ul > .info {
+   /* color: #2d8fdd; */
+   /* border-left: solid 6px #2d8fdd; */
+   /* background: #f1f8ff; */
+   margin-bottom: 0px;
+   /* line-height: 1.5; */
+   /* padding: 0.5em; */
+ }
+
+ #ajax-response-wrapper > ul > .info_last {
+   /* color: #2d8fdd; */
+   /* border-left: solid 6px #2d8fdd; */
+   /* background: #f1f8ff; */
+   margin-bottom: 10px;
+   /* line-height: 1.5; */
+   /* padding: 0.5em; */
+ }
+
+ label {
+   display:block;
+   float:left;
+   width:145px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
 
  #ajax-response-wrapper-aho > ul, ol {
    padding: 0;
