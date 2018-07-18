@@ -5,12 +5,15 @@ require_relative 'file_manager.rb'
 require 'json'
 
 db_access = DbAccess.new
-ret = db_access.select 'sample_data', ['id', 'resource_path', 'resource_name']
+ret = db_access.select 'data_update_manage', ['data_update_manage_id', 'url_path', 'file_name', 'deleted']
 
 resources_id_map = {}
 ret.each do |row|
-  id = row["id"].to_i
-  resource_url = row["resource_path"] + row["resource_name"]
+  deleted_flag = row["deleted"].to_i
+  next if deleted_flag == 1
+
+  id = row["data_update_manage_id"].to_i
+  resource_url = row["url_path"] + '/'+ row["file_name"]
   resources_id_map[id] = resource_url
 end
 

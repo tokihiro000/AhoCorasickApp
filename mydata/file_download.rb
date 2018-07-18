@@ -2,7 +2,12 @@ require 'open-uri'
 
 class FileDownload
   def initialize
-    @download_folder = "download/"
+    current_dir = Dir::pwd
+    @download_folder = current_dir + "/download/"
+    if FileTest.exists? (@download_folder)
+      FileUtils.rm_rf(@download_folder)
+    end
+    Dir.mkdir(@download_folder)
   end
 
   def download url

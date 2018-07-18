@@ -3,8 +3,13 @@ require 'fileutils'
 
 class FileManager
   def initialize
-    @src_folder = "download/"
-    @dest_folder = "out/"
+    current_dir = Dir::pwd
+    @src_folder = current_dir + "/download/"
+    @dest_folder = current_dir + "/out/"
+    if FileTest.exists? (@dest_folder)
+      FileUtils.rm_rf(@dest_folder)
+    end
+    Dir.mkdir(@dest_folder)
   end
 
   def unzip zip_file_name

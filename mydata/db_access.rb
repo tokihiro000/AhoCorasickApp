@@ -3,15 +3,20 @@ require 'json'
 
 class DbAccess
   def initialize
+    environment_data = open('config/env.json') do |io|
+      JSON.load(io)
+    end
+
     json_data = open('config/db.json') do |io|
       JSON.load(io)
     end
 
+    env = environment_data['env']
     @client = Mysql2::Client.new(
-      :host     => json_data['host'],
-      :username => json_data['username'],
-      :password => json_data['password'],
-      :database => json_data['database']
+      :host     => json_data[env]['host'],
+      :username => json_data[env]['username'],
+      :password => json_data[env]['password'],
+      :database => json_data[env]['database']
     )
   end
 
@@ -32,7 +37,7 @@ end
 
 if $0 == __FILE__
   access = DbAccess.new
-  ret = access.select 'sample_data', ['id', 'resource_path', 'resource_name']
+  ret = access.select 'data_update_manage', ['data_update_manage_id', 'url_path', 'file_name', 'deleted']
   ret.each do |row|
     p row
   end
