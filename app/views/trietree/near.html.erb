@@ -1,4 +1,11 @@
-<h1>AhoCorasickを使った文字列予測</h1>
+<h3>本番リソース検索</h3>
+<div id="description">
+  <ul>
+    <li>本番で使われているダウンロードリソースをファイル名で検索できます</li>
+    <li>data_update_manageで指定されている全zipが対象です</li>
+    <li>data_update_manageでdeletedフラグが立っているものは無視します</li>
+  </ul>
+</div>
 <%= form_tag({:controller => 'trietree', :action => 'near'}, :remote => true, :class => 'form-ajax') do -%>
 <%= hidden_field_tag :ajax_handler, 'key_request' -%>
 <%= text_field_tag :keyword %>

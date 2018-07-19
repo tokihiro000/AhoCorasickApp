@@ -16,13 +16,13 @@
 #ajax-response-wrapper {
  display:block;
  vertical-align: top;
- width: 1080px;
+ width: 620px;
 }
 
 #ajax-response-wrapper-aho {
  display:block;
  vertical-align: top;
- width: 1080px;
+ width: 620px;
 }
 
  #ajax-response-wrapper > ul, ol {
@@ -129,4 +129,20 @@ img {
 
 input:focus {
     border:solid 1px #EEA34A;
+}
+
+#description {
+  width: 620px;
+}
+
+#description > ul, ol{
+  color: #668ad8;/*文字色*/
+  border: dashed 2px #668ad8;/*破線 太さ 色*/
+  background: #f1f8ff; /*背景色*/
+  padding: 0.5em 0.5em 0.5em 2em;
+}
+
+#description > ul li, ol li {
+  line-height: 1.5;
+  padding: 0.5em 0;
 }
