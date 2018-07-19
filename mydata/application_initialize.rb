@@ -27,12 +27,16 @@ class Node
   attr_accessor :word, :is_root, :node_number, :union_word_set, :value
   def initialize node_count, value = {}
     @node_number = node_count
-    @value = value
+    @value = []
     @edge_map = {}
     @word = ""
     @failure_node = nil
     @is_root = false
     @union_word_set = Set.new
+
+    if !value.empty?
+      @value << value
+    end
   end
 
   def toHash
@@ -140,7 +144,7 @@ private
 
     # 1ワード分終わったのでノードに対象ワードを設定する
     before_node.word = word
-    before_node.value = value
+    before_node.value << value
   end
 
   def createFailure
@@ -332,8 +336,9 @@ public
     failure_set = Set.new
     word = search_node.word
     if word.length != 0
-      value = search_node.value
-      result_set.add ({ 'word' => word, 'zip' => value['z'], 'path' => value['path'] })
+      search_node.value.each do |value|
+        result_set.add ({ 'word' => word, 'zip' => value['z'], 'path' => value['path'] })
+      end
     end
 
     next_edge_list = []
@@ -376,8 +381,9 @@ public
       next if word.length == 0
 
       word_count += 1
-      value = next_node.value
-      result_set.add ({ 'word' => word, 'zip' => value['z'], 'path' => value['path'] })
+      next_node.value.each do |value|
+        result_set.add ({ 'word' => word, 'zip' => value['z'], 'path' => value['path'] })
+      end
       break if word_count == 10
     end
 
