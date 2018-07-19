@@ -5,10 +5,14 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/set1.css" />
     <%= javascript_include_tag "application" %>
   </head>
-
   <body>
     <%= yield %>
+    <script src="/assets/js/classie.js"></script>
   </body>
 </html>

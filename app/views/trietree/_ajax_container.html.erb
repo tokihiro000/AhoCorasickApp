@@ -2,15 +2,15 @@
   <ul>
     <% @data.each do |obj| %>
       <li class="title">
-        <font color="#191970"><label>リソース名:</label></font>
+        <font color="#191970"><label class="label_class">リソース名:</label></font>
         <%= link_to obj["word"],
           {controller: 'trietree', action: 'download', filetype: "resource", path: obj["path"], filename: obj["word"]},
           target: "_new"
         %>
       </li>
-      
+
       <li class="info">
-        <font color="#191970"><label>Zip名:<label></font>
+        <font color="#191970"><label class="label_class">Zip名:<label></font>
           <%= link_to obj["zip"],
             {controller: 'trietree', action: 'download', filetype: "zip", path: obj["zip"], filename: obj["zip"]},
             target: "_new"
@@ -18,10 +18,10 @@
       </li>
 
       <% if obj["path"].end_with? ".png", ".jpg", ".jpeg" %>
-        <li class="info"><font color="#191970"><label>リソースパス:<label></font><%= '/' + obj["path"] %></li>
-        <li class="info_last"><%= image_tag '/out/' + obj["path"] %></li>
+        <li class="info"><font color="#191970"><label class="label_class">リソースパス:<label></font><%= '/' + obj["path"] %></li>
+        <li class="info_last"><%= image_tag '/out/' + obj["path"], :class => 'img_class' %></li>
       <% else %>
-        <li class="info_last"><font color="#191970"><label>リソースパス:<label></font><%= '/' + obj["path"] %></li>
+        <li class="info_last"><font color="#191970"><label class="label_class">リソースパス:<label></font><%= '/' + obj["path"] %></li>
       <% end %>
     <% end %>
   </ul>

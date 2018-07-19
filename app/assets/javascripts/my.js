@@ -4,10 +4,10 @@
 
 keyword = ""
 $(document).ready(function() {
-  $('#keyword').keyup(function() {
+  $('.keyword').keyup(function() {
     $('#submit_btn').submit()
     $("#submit_btn").prop("disabled", true);
-    console.log("keyword key up");
+    console.log("keyup");
   })
   $(document)
   .ajaxStart(function() { $("#submit_btn").prop("disabled", true); })
