@@ -66,13 +66,13 @@
    /* padding: 0.5em; */
  }
 
- label {
+#ajax-response-wrapper > label {
    display:block;
    float:left;
    width:145px;
 }
 
-img {
+#ajax-response-wrapper > img {
     max-width: 100%;
     height: auto;
 }

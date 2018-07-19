@@ -77,6 +77,10 @@ class Node
     return @edge_map.values
   end
 
+  def getSortEdges
+    return @edge_map.sort{|a,b| a[0].downcase <=> b[0].downcase }.to_h.values
+  end
+
   def LinkFailureNode node
     @failure_node = node
   end
@@ -120,6 +124,12 @@ class AhoCorasick
     @root_node = Node.new $node_count
     $node_count += 1
     @root_node.is_root = true
+
+    json_data = open('mydata/config/const.json') do |io|
+      JSON.load(io)
+    end
+    @search_time_limit = json_data == nil ? 1.0 : json_data["SearchTimeLimit"]
+    @search_word_count = json_data == nil ? 10 : json_data["SearchWordCount"]
   end
 
 private
@@ -341,41 +351,40 @@ public
       end
     end
 
-    next_edge_list = []
     failure_edge_list = []
     if search_node.failureNode != nil
       failure_set.add search_node.failureNode.word if search_node.failureNode.word.length != 0
-      failure_edge_list = failure_edge_list | search_node.failureNode.getEdges
+      failure_edge_list = failure_edge_list | search_node.failureNode.getSortEdges
     end
 
     start_time = Time.now
     word_count = 0
-    next_edge_list = next_edge_list | search_node.getEdges
+    next_edge_list = search_node.getSortEdges
     while next_edge_list.count != 0
-      edge = next_edge_list.pop
+      edge = next_edge_list.shift
       next_node = edge.next_node
       failure_node = next_node.failureNode
       failure_set.add failure_node.word if failure_node.word.length != 0
 
       seartch_time = Time.now - start_time
-      if seartch_time > 1.0
+      if seartch_time > @search_time_limit
         puts "検索時間タイムアウト"
         break
       end
 
       # 10個以上単語があるなら下のエッジ優先にする
-      tmp_next_edge_list = next_node.getEdges
+      tmp_next_edge_list = next_node.getSortEdges
       tmp_edge_count = tmp_next_edge_list.count
-      if tmp_edge_count >= 10
+      if tmp_edge_count >= @search_word_count
         next_edge_list = tmp_next_edge_list
       else
-        tmp_next_edge_list.reverse_each do |edge|
+        tmp_next_edge_list.each do |edge|
           next_edge_list.unshift edge
         end
       end
 
       edge_count = next_edge_list.count
-      index_max = edge_count >= 10 ? 10 : edge_count
+      index_max = edge_count >= @search_word_count ? @search_word_count : edge_count
       next_edge_list = next_edge_list[0, index_max]
       word = next_node.word
       next if word.length == 0
@@ -384,7 +393,7 @@ public
       next_node.value.each do |value|
         result_set.add ({ 'word' => word, 'zip' => value['z'], 'path' => value['path'] })
       end
-      break if word_count == 10
+      break if word_count == @search_word_count
     end
 
     failure_count = failure_set.size
