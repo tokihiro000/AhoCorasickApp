@@ -4,11 +4,11 @@
     <li>本番で使われているダウンロードリソースをファイル名で検索できます</li>
     <li>data_update_manageで指定されている全zipが対象です</li>
     <li>data_update_manageでdeletedフラグが立っているものは無視します</li>
+    <li><i class="fas fa-file-download faa-bounce animated fa-fw"></i>←このアイコンがあるものはクリックでダウンロードできます</li>
   </ul>
 </div>
 <%= form_tag({:controller => 'trietree', :action => 'near'}, :remote => true, :class => 'form-ajax') do -%>
 <%= hidden_field_tag :ajax_handler, 'key_request' -%>
-<!-- <%= text_field_tag :keyword %> -->
 <span class="input input--minoru">
     <input class="input__field input__field--minoru keyword" type="text" id="input-13" name="keyword" />
     <label class="input__label input__label--minoru" for="input-13">

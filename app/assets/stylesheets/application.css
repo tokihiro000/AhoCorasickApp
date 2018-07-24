@@ -50,6 +50,15 @@
    /* padding: 0.5em; */
  }
 
+ .download-icon {
+     display: inline-block;
+     width: 256px;
+     height: 256px;
+     max-width: 100%;
+     height: auto;
+     background: url(/download1.png) no-repeat;
+ }
+
  #ajax-response-wrapper > ul > .info {
    /* color: #2d8fdd; */
    /* border-left: solid 6px #2d8fdd; */
