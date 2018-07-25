@@ -2,16 +2,22 @@
 //= require jquery_ujs
 //= require jquery.turbolinks
 
-keyword = ""
 $(document).ready(function() {
   $('.keyword').keyup(function() {
     $('#submit_btn').submit()
     $("#submit_btn").prop("disabled", true);
-    console.log("keyup");
   })
   $(document)
   .ajaxStart(function() { $("#submit_btn").prop("disabled", true); })
   .ajaxComplete(function() { $("#submit_btn").prop("disabled", false); })
 })
 
-// $(document).on('page:load', ready)
+$(document).ready(function() {
+  $('.card_id').keyup(function() {
+    $('#submit_btn').submit()
+    $("#submit_btn").prop("disabled", true);
+  })
+  $(document)
+  .ajaxStart(function() { $("#submit_btn").prop("disabled", true); })
+  .ajaxComplete(function() { $("#submit_btn").prop("disabled", false); })
+})

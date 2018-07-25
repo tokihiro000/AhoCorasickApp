@@ -1,0 +1,23 @@
+<h3><%= $const_info[$env_info["env"]]["title"] %>リソース検索</h3>
+<p>最終同期日時: <%= $update_time %></p>
+<div id="description">
+  <ul>
+    <li>本番で使われているダウンロードリソースをファイル名で検索できます</li>
+    <li>data_update_manageで指定されている全zipが対象です</li>
+    <li>data_update_manageでdeletedフラグが立っているものは無視します</li>
+    <li><i class="fas fa-file-download faa-bounce animated fa-fw"></i>←このアイコンがあるものはクリックでダウンロードできます</li>
+  </ul>
+</div>
+<%= form_tag({:controller => 'search', :action => 'card'}, :remote => true, :class => 'form-ajax') do -%>
+<%= hidden_field_tag :ajax_handler, 'key_request' -%>
+<span class="input input--minoru">
+    <input class="input__field input__field--minoru card_id" type="text" id="input-13" name="card_id" />
+    <label class="input__label input__label--minoru" for="input-13">
+        <span class="input__label-content input__label-content--minoru">前方一致で検索結果が表示されます</span>
+    </label>
+</span>
+<%= submit_tag('send', :class => 'btn btn-primary btn-sm', :type => 'hidden', :id => 'submit_btn') -%>
+<% end %>
+
+<div id="ajax-search-card"></div>
+<div id="ajax-search-card-aho"></div>

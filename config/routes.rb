@@ -3,5 +3,8 @@ Rails.application.routes.draw do
   get 'trietree/near'
   get 'trietree/download'
   post 'trietree/near'
+  get 'search/card'
+  post 'search/card'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
