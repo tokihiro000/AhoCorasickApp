@@ -40,10 +40,10 @@ File.open("mydata/sample_json.json", mode = "w") {|f|
 }
 
 # 更新日時
-if FileTest.exists? "update_time.txt"
+if FileTest.exists? "mydata/update_time.txt"
   FileUtils.rm_rf("mydata/update_time.txt")
 end
-File.open("update_time.txt", mode = "w") {|f|
+File.open("mydata/update_time.txt", mode = "w") {|f|
   now = Time.now
   f.write(now)
 }
