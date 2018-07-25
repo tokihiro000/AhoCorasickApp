@@ -15,14 +15,14 @@
  */
 #ajax-response-wrapper {
  font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック';
- display:block;
+ display:inline-block;
  vertical-align: top;
  width: 620px;
 }
 
 #ajax-response-wrapper-aho {
  font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック';
- display:block;
+ display:inline-block;
  vertical-align: top;
  width: 620px;
 }
@@ -42,12 +42,8 @@
  }
 
  #ajax-response-wrapper > ul > .title {
-   /* color: #2d8fdd;*/
-   /* border-left: solid 6px #2d8fdd; */
    background: #afeeee;
    margin-bottom: 0px;
-   /* line-height: 1.5; */
-   /* padding: 0.5em; */
  }
 
  .download-icon {
@@ -76,17 +72,6 @@
    /* line-height: 1.5; */
    /* padding: 0.5em; */
  }
-
-.label_class {
-   display:block;
-   float:left;
-   width:145px;
-}
-
-.img_class {
-    max-width: 100%;
-    height: auto;
-}
 
  #ajax-response-wrapper-aho > ul, ol {
    padding: 0;
@@ -151,4 +136,15 @@ input:focus {
 #description > ul li, ol li {
   line-height: 1.5;
   padding: 0.5em 0;
+}
+
+.label_class {
+   display:block;
+   float:left;
+   width:145px;
+}
+
+.img_class {
+    max-width: 100%;
+    height: auto;
 }

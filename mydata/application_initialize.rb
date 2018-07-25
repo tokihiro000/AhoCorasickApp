@@ -124,12 +124,8 @@ class AhoCorasick
     @root_node = Node.new $node_count
     $node_count += 1
     @root_node.is_root = true
-
-    json_data = open('mydata/config/const.json') do |io|
-      JSON.load(io)
-    end
-    @search_time_limit = json_data == nil ? 1.0 : json_data["SearchTimeLimit"]
-    @search_word_count = json_data == nil ? 10 : json_data["SearchWordCount"]
+    @search_time_limit = $const_info == nil ? 1.0 : $const_info["SearchTimeLimit"]
+    @search_word_count = $const_info == nil ? 10 : $const_info["SearchWordCount"]
   end
 
 private
@@ -200,6 +196,37 @@ private
       end
     end
   end
+
+def getSearchNode target_text
+  search_node = @root_node
+
+  index = 0
+  length = target_text.length
+  while index < length
+    char = target_text[index]
+    edge = search_node.getEdge char
+
+    if edge == nil
+      break
+    else
+      search_node = edge.next_node
+      index += 1
+    end
+  end
+
+  return search_node
+end
+
+def setResourceInfo list, node
+  word = node.word
+  if word.length == 0
+    return
+  end
+
+  node.value.each do |value|
+    list << { 'word' => word, 'zip' => value['z'], 'path' => value['path'] }
+  end
+end
 
 public
   def Build(*target_word_list)
@@ -326,31 +353,12 @@ public
   end
 
   def GetNearStr target
-    search_node = @root_node
+    search_node = getSearchNode target
 
-    index = 0
-    length = target.length
-    while index < length
-      char = target[index]
-      edge = search_node.getEdge char
+    search_result_list = Array.new
+    setResourceInfo(search_result_list, search_node)
 
-      if edge == nil
-        break
-      else
-        search_node = edge.next_node
-        index += 1
-      end
-    end
-
-    result_set = Set.new
     failure_set = Set.new
-    word = search_node.word
-    if word.length != 0
-      search_node.value.each do |value|
-        result_set.add ({ 'word' => word, 'zip' => value['z'], 'path' => value['path'] })
-      end
-    end
-
     failure_edge_list = []
     if search_node.failureNode != nil
       failure_set.add search_node.failureNode.word if search_node.failureNode.word.length != 0
@@ -372,7 +380,7 @@ public
         break
       end
 
-      # 10個以上単語があるなら下のエッジ優先にする
+      # 指定個数以上単語があるなら下のエッジ優先にする
       tmp_next_edge_list = next_node.getSortEdges
       tmp_edge_count = tmp_next_edge_list.count
       if tmp_edge_count >= @search_word_count
@@ -390,9 +398,7 @@ public
       next if word.length == 0
 
       word_count += 1
-      next_node.value.each do |value|
-        result_set.add ({ 'word' => word, 'zip' => value['z'], 'path' => value['path'] })
-      end
+      setResourceInfo(search_result_list, next_node)
       break if word_count == @search_word_count
     end
 
@@ -408,7 +414,7 @@ public
       end
     end
 
-    return [result_set.to_a, failure_set.to_a]
+    return [search_result_list, failure_set.to_a]
   end
 
   def Search target
@@ -449,6 +455,23 @@ public
     return result_set
   end
 end
+
+$update_time = "未確認"
+File.open('mydata/update_time.txt') do |file|
+  file.each_line do |str|
+    str.chomp!
+    $update_time = str
+  end
+end
+
+$env_info = open('mydata/config/env.json') do |io|
+  JSON.load(io)
+end
+
+$const_info = open('mydata/config/const.json') do |io|
+  JSON.load(io)
+end
+
 
 $ahoCorasick = AhoCorasick.new
 # $ahoCorasick.Build 'ab', 'bc', 'bab', 'd', 'abcde'

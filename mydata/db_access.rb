@@ -3,11 +3,11 @@ require 'json'
 
 class DbAccess
   def initialize
-    environment_data = open('config/env.json') do |io|
+    environment_data = open('mydata/config/env.json') do |io|
       JSON.load(io)
     end
 
-    json_data = open('config/db.json') do |io|
+    json_data = open('mydata/config/db.json') do |io|
       JSON.load(io)
     end
 

@@ -3,6 +3,7 @@ require_relative 'db_access.rb'
 require_relative 'file_download.rb'
 require_relative 'file_manager.rb'
 require 'json'
+require 'fileutils'
 
 db_access = DbAccess.new
 ret = db_access.select 'data_update_manage', ['data_update_manage_id', 'url_path', 'file_name', 'deleted']
@@ -33,11 +34,16 @@ resources_id_map.each do |id, url|
   end
 end
 
-# unzip_map.each_pair do |path, unzip_info|
-#   print path, ", zip_file_name[", unzip_info["zip_file_name"], "], file_name:[", unzip_info["file_name"], "]\n"
-# end
-
 json = unzip_map.to_json
-File.open("sample_json.json", mode = "w") {|f|
+File.open("mydata/sample_json.json", mode = "w") {|f|
   f.write(json)
+}
+
+# 更新日時
+if FileTest.exists? "update_time.txt"
+  FileUtils.rm_rf("mydata/update_time.txt")
+end
+File.open("update_time.txt", mode = "w") {|f|
+  now = Time.now
+  f.write(now)
 }

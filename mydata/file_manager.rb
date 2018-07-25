@@ -4,8 +4,8 @@ require 'fileutils'
 class FileManager
   def initialize
     current_dir = Dir::pwd
-    @src_folder = current_dir + "/download/"
-    @dest_folder = current_dir + "/out/"
+    @src_folder = current_dir + "mydata/download/"
+    @dest_folder = current_dir + "mydata/out/"
     if FileTest.exists? (@dest_folder)
       FileUtils.rm_rf(@dest_folder)
     end
