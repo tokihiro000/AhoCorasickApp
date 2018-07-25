@@ -257,13 +257,20 @@ public
       JSON.load(io)
     end
 
-    count = 0
-    json_data.each do |resource_path, resource_info|
-      count += 1
-      if count % 100000 == 0
-        print "now_count: ", count, "\n"
-      end
+    json_data.each do |id, value|
+      info = {'v' => value}
+      createTrie id, info
+    end
 
+    createFailure
+  end
+
+  def BuildFromResourceJson(file_name)
+    json_data = open(file_name) do |io|
+      JSON.load(io)
+    end
+
+    json_data.each do |resource_path, resource_info|
       resource_info["path"] = resource_path
       resource_name_list = resource_path.split("/")
       str = resource_name_list.last
@@ -476,7 +483,7 @@ end
 $ahoCorasick = AhoCorasick.new
 # $ahoCorasick.Build 'ab', 'bc', 'bab', 'd', 'abcde'
 # $ahoCorasick.BuildFromFile 'mydata/input.txt'
-$ahoCorasick.BuildFromJson 'mydata/sample_json.json'
+$ahoCorasick.BuildFromResourceJson 'mydata/sample_json.json'
 
 # ahoCorasick.PrintTri
 # ahoCorasick.Save
