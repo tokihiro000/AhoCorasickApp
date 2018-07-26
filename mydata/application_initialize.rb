@@ -121,7 +121,7 @@ end
 
 class AhoCorasick
   attr_accessor :enable_failure_search_word_length
-  
+
   def initialize
     @root_node = Node.new $node_count
     $node_count += 1
@@ -331,8 +331,8 @@ public
 
       search_key_result.each do |word|
         @search_map[word].each do |value|
-          # failure_result_list << { 'word' => word, 'zip' => value['z'], 'path' => value['path'] }
-          failure_result_list << word
+          failure_result_list << { 'word' => word, 'zip' => value['z'], 'path' => value['path'] }
+          # failure_result_list << word
         end
       end
     end
