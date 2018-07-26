@@ -3,7 +3,7 @@ require 'open-uri'
 class FileDownload
   def initialize
     current_dir = Dir::pwd
-    @download_folder = current_dir + "mydata/download/"
+    @download_folder = current_dir + "/mydata/download/"
     if FileTest.exists? (@download_folder)
       FileUtils.rm_rf(@download_folder)
     end

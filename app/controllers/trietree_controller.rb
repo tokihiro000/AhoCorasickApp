@@ -19,14 +19,12 @@ class TrietreeController < ApplicationController
       keyword = params[:keyword]
 
       $request_keyword = keyword
+      @request_keyword = keyword
       list = $ahoCorasick.GetNearStr keyword
+      @enable_failure_search_word_length = $ahoCorasick.enable_failure_search_word_length
       @data = list[0]
       @failure_data = list[1]
-      if @data.size > 0
-        render
-      else
-        render json: 'no data'
-      end
+      render
     end
   end
 end

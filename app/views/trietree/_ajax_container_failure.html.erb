@@ -1,7 +1,19 @@
-<% if @failure_data != nil %>
+<% if @failure_data != nil &&  @failure_data.count > 0 %>
   <ul>
     <% @failure_data.each do |str| %>
     <li><%= str %></li>
     <% end %>
+  </ul>
+<% else %>
+  <ul>
+    <li class="title">
+      <% if (@request_keyword.length < @enable_failure_search_word_length) %>
+      <font color="#191970"><label class="label_class"></label></font>
+        <i></i>検索結果が多いので【<%= @enable_failure_search_word_length - 1 %>】文字以下の場合は部分文字列検索を行いません
+      <% else %>
+        <font color="#191970"><label class="label_class">Not Found</label></font>
+          <i></i>【<%= @request_keyword %>】に該当するリソースは見つかりませんでした
+      <% end %>
+    </li>
   </ul>
 <% end %>

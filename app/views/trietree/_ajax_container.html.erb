@@ -1,4 +1,4 @@
-<% if @data != nil %>
+<% if @data != nil && @data.count > 0 %>
   <ul>
     <% @data.each do |obj| %>
       <li class="title">
@@ -22,5 +22,12 @@
         <li class="info_last"><font color="#191970"><label class="label_class">リソースパス:<label></font><%= '/' + obj["path"] %></li>
       <% end %>
     <% end %>
+  </ul>
+<% else %>
+  <ul>
+    <li class="title">
+      <font color="#191970"><label class="label_class">Not Found</label></font>
+        <i></i>【<%= @request_keyword %>】に該当するリソースは見つかりませんでした
+    </li>
   </ul>
 <% end %>

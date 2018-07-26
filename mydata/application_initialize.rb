@@ -120,15 +120,34 @@ class Node
 end
 
 class AhoCorasick
+  attr_accessor :enable_failure_search_word_length
+  
   def initialize
     @root_node = Node.new $node_count
     $node_count += 1
     @root_node.is_root = true
+    @search_map = {}
+    @search_key_list = []
     @search_time_limit = $const_info == nil ? 1.0 : $const_info["SearchTimeLimit"]
     @search_word_count = $const_info == nil ? 10 : $const_info["SearchWordCount"]
+    @failure_word_count = $const_info == nil ? 10 : $const_info["FailureWordCount"]
+    @enable_failure_search_word_length = $const_info == nil ? 5 : $const_info["EnableFailureSearchWordLength"]
   end
 
 private
+  def make
+    @search_key_list = @search_map.keys.sort
+  end
+
+  def createIndex word, value
+    if @search_map.has_key? word
+    else
+      @search_map[word] = []
+    end
+
+    @search_map[word] << value
+  end
+
   def createTrie word, value = {}
     before_node = @root_node
     word.each_char { |character|
@@ -197,25 +216,25 @@ private
     end
   end
 
-def getSearchNode target_text
-  search_node = @root_node
+  def getSearchNode target_text
+    search_node = @root_node
 
-  index = 0
-  length = target_text.length
-  while index < length
-    char = target_text[index]
-    edge = search_node.getEdge char
+    index = 0
+    length = target_text.length
+    while index < length
+      char = target_text[index]
+      edge = search_node.getEdge char
 
-    if edge == nil
-      break
-    else
-      search_node = edge.next_node
-      index += 1
+      if edge == nil
+        break
+      else
+        search_node = edge.next_node
+        index += 1
+      end
     end
-  end
 
-  return search_node
-end
+    return search_node
+  end
 
 def setResourceInfo list, node
   word = node.word
@@ -267,10 +286,10 @@ public
       resource_info["path"] = resource_path
       resource_name_list = resource_path.split("/")
       str = resource_name_list.last
-      createTrie str, resource_info
+      createIndex str, resource_info
     end
 
-    createFailure
+    make
   end
 
   def PrintTri
@@ -281,140 +300,37 @@ public
     @root_node.printDebug
   end
 
-  def Save
-    hash = {}
-    hash[@root_node.node_number] = @root_node.toHash
-
-    queue = @root_node.getEdges
-    while queue.length > 0
-      edge = queue.shift
-      node = edge.next_node
-      hash[node.node_number] = node.toHash
-      node.getEdges.each { |next_edge| queue << next_edge }
-    end
-
-    # str = JSON.pretty_generate(hash)
-    open('./text.json', 'w') do |io|
-      JSON.dump(hash, io)
-    end
-  end
-
-  def Load
-    json_data = open('./text.json') do |io|
-      JSON.load(io)
-    end
-
-    tmp_node_map = {}
-    json_data["0"]["edge"].each { |char, value|
-      next_node_number = value["next_node"]
-      next_node = Node.new next_node_number
-      tmp_node_map[next_node_number] = next_node
-
-      edge = Edge.new char, @root_node, next_node
-      @root_node.addEdge edge
-    }
-    @root_node.LinkFailureNode nil
-
-    json_data.delete("0")
-
-    json_data.each { |node_number, value|
-      node = nil
-      if tmp_node_map.has_key? node_number
-        node = tmp_node_map[node_number]
-      else
-        node = Node.new node_number
-        tmp_node_map[node_number] = node
-      end
-
-      value["edge"].each { |char, edge_value|
-        next_node_number = edge_value["next_node"]
-        next_node = Node.new next_node_number
-        tmp_node_map[next_node_number] = next_node
-        edge = Edge.new char, node, next_node
-        node.addEdge edge
-      }
-    }
-
-    json_data.each do |node_number, value|
-      target_node = tmp_node_map[node_number]
-      failure_node_number = value["failure_node"]
-      target_node.word = value["word"] if value["word"].length != 0
-
-      if failure_node_number == 0
-        target_node.LinkFailureNode @root_node
-      else
-        target_node.LinkFailureNode tmp_node_map[failure_node_number]
-        target_node.union_word_set.add tmp_node_map[failure_node_number].word
-        tmp_node_map[failure_node_number].union_word_set.each { |word|
-          target_node.union_word_set.add word
-        }
-      end
-    end
-  end
-
   def GetNearStr target
-    search_node = getSearchNode target
-
-    search_result_list = Array.new
-    setResourceInfo(search_result_list, search_node)
-
-    failure_set = Set.new
-    failure_edge_list = []
-    if search_node.failureNode != nil
-      failure_set.add search_node.failureNode.word if search_node.failureNode.word.length != 0
-      failure_edge_list = failure_edge_list | search_node.failureNode.getSortEdges
+    search_key_result = @search_key_list.grep(/^#{target}/)
+    search_result_size = search_key_result.count
+    if search_result_size > @search_word_count
+      search_key_result = search_key_result[0, @search_word_count]
     end
 
-    start_time = Time.now
-    word_count = 0
-    next_edge_list = search_node.getSortEdges
-    while next_edge_list.count != 0
-      edge = next_edge_list.shift
-      next_node = edge.next_node
-      failure_node = next_node.failureNode
-      failure_set.add failure_node.word if failure_node.word.length != 0
+    search_result_list = []
+    search_key_result.each do |word|
+      @search_map[word].each do |value|
+        search_result_list << { 'word' => word, 'zip' => value['z'], 'path' => value['path'] }
+      end
+    end
 
-      seartch_time = Time.now - start_time
-      if seartch_time > @search_time_limit
-        puts "検索時間タイムアウト"
-        break
+    failure_result_list = []
+    if target.length >= @enable_failure_search_word_length
+      first_char = target[0]
+      search_key_result = @search_key_list.grep(/.#{target}/)
+      if search_result_size > @failure_word_count
+        search_key_result = search_key_result[0, @failure_word_count]
       end
 
-      # 指定個数以上単語があるなら下のエッジ優先にする
-      tmp_next_edge_list = next_node.getSortEdges
-      tmp_edge_count = tmp_next_edge_list.count
-      if tmp_edge_count >= @search_word_count
-        next_edge_list = tmp_next_edge_list
-      else
-        tmp_next_edge_list.each do |edge|
-          next_edge_list.unshift edge
+      search_key_result.each do |word|
+        @search_map[word].each do |value|
+          # failure_result_list << { 'word' => word, 'zip' => value['z'], 'path' => value['path'] }
+          failure_result_list << word
         end
       end
-
-      edge_count = next_edge_list.count
-      index_max = edge_count >= @search_word_count ? @search_word_count : edge_count
-      next_edge_list = next_edge_list[0, index_max]
-      word = next_node.word
-      next if word.length == 0
-
-      word_count += 1
-      setResourceInfo(search_result_list, next_node)
-      break if word_count == @search_word_count
     end
 
-    failure_count = failure_set.size
-    if failure_count < 5
-      failure_edge_list.each do |failure_edge|
-        next_node = failure_edge.next_node
-        word = next_node.word
-        next if word.length == 0
-        failure_count += 1
-        failure_set.add word
-        break if failure_count == 5
-      end
-    end
-
-    return [search_result_list, failure_set.to_a]
+    return [search_result_list, failure_result_list]
   end
 
   def Search target
@@ -485,7 +401,7 @@ $ahoCorasick.BuildFromJson 'mydata/sample_json.json'
 # ahoCorasick.Load
 # now2 = Time.new;
 # p now2
-p $ahoCorasick.GetNearStr "za"
+p $ahoCorasick.GetNearStr "ui_"
 # now3 = Time.new;
 # p now3
 # ahoCorasick.PrintTri
