@@ -118,7 +118,7 @@
  }
 
  #ajax-response-wrapper-aho > ul > .title {
-   background: #ff4500;
+   background: #F3A5A5;
    margin-bottom: 0px;
  }
 
@@ -163,4 +163,12 @@
 .img_class {
     max-width: 100%;
     height: auto;
+}
+
+.link_failure {
+  color: #FA5858;
+}
+
+.link_failure:hover {
+  color: #F01212;
 }

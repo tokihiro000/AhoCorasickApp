@@ -3,14 +3,14 @@
   <% @failure_data.each do |obj| %>
     <li class="title">
       <font color="#191970"><label class="label_class">リソース名:</label></font>
-      <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["word"]}), { :class => "faa-parent animated-hover", :target => "_new"} do %>
+      <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["word"]}), { :class => "faa-parent animated-hover link_failure", :target => "_new"} do %>
         <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["word"] %>
       <% end %>
     </li>
 
     <li class="info">
       <font color="#191970"><label class="label_class">Zip名:<label></font>
-        <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "zip", :path => obj["zip"], :filename => obj["zip"]}), { :class => "faa-parent animated-hover", :target => "_new"} do %>
+        <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "zip", :path => obj["zip"], :filename => obj["zip"]}), { :class => "faa-parent animated-hover link_failure", :target => "_new"} do %>
           <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["zip"] %>
         <% end %>
     </li>
