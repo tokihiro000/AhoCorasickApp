@@ -21,3 +21,13 @@ $(document).ready(function() {
   .ajaxStart(function() { $("#submit_btn").prop("disabled", true); })
   .ajaxComplete(function() { $("#submit_btn").prop("disabled", false); })
 })
+
+$(document).ready(function() {
+  $('input').change(function() {
+    $('#submit_btn').submit()
+    $("#submit_btn").prop("disabled", true);
+  });
+  $(document)
+  .ajaxStart(function() { $("#submit_btn").prop("disabled", true); })
+  .ajaxComplete(function() { $("#submit_btn").prop("disabled", false); })
+})

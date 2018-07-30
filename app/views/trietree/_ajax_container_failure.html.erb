@@ -2,24 +2,33 @@
 <ul>
   <% @failure_data.each do |obj| %>
     <li class="title">
-      <font color="#191970"><label class="label_class">リソース名:</label></font>
-      <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["word"]}), { :class => "faa-parent animated-hover link_failure", :target => "_new"} do %>
-        <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["word"] %>
-      <% end %>
+      <font color="#191970"><label class="label_class">カード名:</label></font>
+      <!-- <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["word"]}), { :class => "link_failure", :target => "_new"} do %>
+        <%= obj["word"] %>
+      <% end %> -->
+      <%= obj["word"] %>
     </li>
-
-    <li class="info">
-      <font color="#191970"><label class="label_class">Zip名:<label></font>
-        <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "zip", :path => obj["zip"], :filename => obj["zip"]}), { :class => "faa-parent animated-hover link_failure", :target => "_new"} do %>
-          <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["zip"] %>
-        <% end %>
-    </li>
-
+    <!-- 冠名 -->
+    <li class="info"><font color="#191970"><label class="label_class">冠名:<label></font><%= obj["crown"] %></li>
+    <!-- レア度 -->
+    <li class="info"><font color="#191970"><label class="label_class">レア度:</label></font><%= obj["rarity"] %></li>
+    <!-- 属性 -->
+    <li class="info"><font color="#191970"><label class="label_class">属性:</label></font><%= obj["attribute"] %></li>
+    <!-- 説明 -->
+    <li class="info"><%= obj["text"] == nil ? '' : obj["text"].html_safe %></li>
+    <!-- 大きい画像  -->
     <% if obj["path"].end_with? ".png", ".jpg", ".jpeg" %>
-      <li class="info"><font color="#191970"><label class="label_class">リソースパス:<label></font><%= '/' + obj["path"] %></li>
-      <li class="info_last"><%= image_tag '/out/' + obj["path"], :class => 'img_class' %></li>
+      <li class="info"><font color="#191970"><label class="label_class">リソースパス:</label></font><%= obj["path"] %></li>
+      <li class="info"><%= image_tag obj["path"], :class => 'img_class' %></li>
     <% else %>
-      <li class="info_last"><font color="#191970"><label class="label_class">リソースパス:<label></font><%= '/' + obj["path"] %></li>
+      <li class="info"><font color="#191970"><label class="label_class">リソースパス:</label></font>Not Found</li>
+    <% end %>
+    <!-- 小さい画像  -->
+    <% if obj["small_path"].end_with? ".png", ".jpg", ".jpeg" %>
+      <li class="info"><font color="#191970"><label class="label_class">リソースパス:</label></font><%= obj["small_path"] %></li>
+      <li class="info_last"><%= image_tag obj["small_path"], :class => 'img_class' %></li>
+    <% else %>
+      <li class="info_last"><font color="#191970"><label class="label_class">リソースパス:</label></font>Not Found</li>
     <% end %>
   <% end %>
 </ul>

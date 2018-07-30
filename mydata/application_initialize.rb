@@ -1,13 +1,19 @@
 require 'json'
 require 'csv'
 require 'set'
+require 'nkf'
+require 'fileutils'
 
 class AhoCorasick
-  attr_accessor :enable_failure_search_word_length
+  attr_accessor :enable_failure_search_word_length, :rarity_set, :attribute_set
 
   def initialize
     @search_map = {}
+    @crown_name_map = {}
+    @rarity_set = Set.new
+    @attribute_set = Set.new
     @search_key_list = []
+    @crown_key_list = []
     @search_time_limit = $const_info == nil ? 1.0 : $const_info["SearchTimeLimit"]
     @search_word_count = $const_info == nil ? 10 : $const_info["SearchWordCount"]
     @failure_word_count = $const_info == nil ? 10 : $const_info["FailureWordCount"]
@@ -17,30 +23,76 @@ class AhoCorasick
 private
   def make
     @search_key_list = @search_map.keys.sort
+    @crown_key_list = @crown_name_map.keys.sort
   end
 
-  def createIndex word, value
-    if @search_map.has_key? word
+  def createIndex map, word, value
+    if map.has_key? word
     else
-      @search_map[word] = []
+      map[word] = []
     end
 
-    @search_map[word] << value
+    map[word] << value
   end
 
 public
   def BuildFromCsv(file_name)
-    json_data = open(file_name) do |io|
-      JSON.load(io)
+    csv_data = CSV.read(file_name, headers: true)
+    csv_data.each do |data|
+      name = data["name"]
+      if name == nil
+        next
+      end
+
+      # 空白は検索の邪魔なので削除
+      name = name.gsub(" ", "")
+      # 半角カナは恐ろしいほど検索しにくいので全角に(UTF-8前提のコード)
+      name = NKF.nkf("-Xw", name)
+      # 冠名があれば抜き出して別保存
+      crown = "no name"
+      card_name = name
+      name.gsub(/【(.*?)】(.+)/) { |match|
+        crown = $1
+        card_name = $2
+      }
+
+      if crown != "no name"
+        createIndex @crown_name_map, crown, card_name
+      end
+
+      # 画像パス。存在チェックもやります(´・ω・)
+      file_name = data["card_id"] + '.jpg'
+      image_path = '/card/large/' + file_name
+      if !FileTest.exists? ('public' + image_path)
+        image_path = ''
+      end
+      image_path_small = '/card/small/' + file_name
+      if !FileTest.exists? ('public' + image_path_small)
+        image_path_small = ''
+      end
+
+      # レアリティ
+      rarity = data["rarity"] == nil ? 0 : data["rarity"].to_i
+      @rarity_set.add rarity
+
+      # 属性
+      attribute = data["attribute"] == nil ? 0 : data["attribute"].to_i
+      @attribute_set.add attribute
+
+      value = {
+        'path' => image_path,
+        'small_path' => image_path_small,
+        'file_name' => file_name,
+        'crown' => crown,
+        'rarity' => rarity,
+        'attribute' => attribute,
+        'text' => data["card_text"]
+      }
+      createIndex @search_map, card_name, value
     end
 
-    json_data.each do |resource_path, resource_info|
-      resource_info["path"] = resource_path
-      resource_name_list = resource_path.split("/")
-      str = resource_name_list.last
-      createIndex str, resource_info
-    end
-
+    @rarity_set.delete 0
+    @attribute_set.delete 0
     make
   end
 
@@ -53,14 +105,28 @@ public
       resource_info["path"] = resource_path
       resource_name_list = resource_path.split("/")
       str = resource_name_list.last
-      createIndex str, resource_info
+      createIndex @search_map, str, resource_info
     end
 
     make
   end
 
-  def GetNearStr target
-    search_key_result = @search_key_list.grep(/^#{target}/)
+  def GetNearStr target, search_type, rarity_list, attribute_list
+    target = target.gsub(/\[/, "\\\[")
+    target = target.gsub(/\]/, "\\\]")
+
+    search_key_result = []
+    if search_type == "card_name"
+      search_key_result = @search_key_list.grep(/^#{target}/)
+    else
+      crown_name_result = @crown_key_list.grep(/^#{target}/)
+      crown_name_result.each do |crown|
+        @crown_name_map[crown].each do |search_key|
+          search_key_result << search_key
+        end
+      end
+    end
+
     search_result_size = search_key_result.count
     if search_result_size > @search_word_count
       search_key_result = search_key_result[0, @search_word_count]
@@ -69,13 +135,31 @@ public
     search_result_list = []
     search_key_result.each do |word|
       @search_map[word].each do |value|
-        search_result_list << { 'word' => word, 'zip' => value['z'], 'path' => value['path'] }
+        rarity = value['rarity']
+        if (!rarity_list.empty?) && (!rarity_list.include? rarity)
+          next
+        end
+
+        attribute = value['attribute']
+        if (!attribute_list.empty?) && (!attribute_list.include? attribute)
+          next
+        end
+
+        search_result_list << {
+          'word' => word,
+          'file_name' => value['file_name'],
+          'crown' => value['crown'],
+          'path' => value['path'],
+          'small_path' => value['small_path'],
+          'rarity' => rarity,
+          'attribute' => attribute,
+          'text' => value['text']
+        }
       end
     end
 
     failure_result_list = []
     if target.length >= @enable_failure_search_word_length
-      first_char = target[0]
       search_key_result = @search_key_list.grep(/.#{target}/)
       if search_result_size > @failure_word_count
         search_key_result = search_key_result[0, @failure_word_count]
@@ -83,7 +167,26 @@ public
 
       search_key_result.each do |word|
         @search_map[word].each do |value|
-          failure_result_list << { 'word' => word, 'zip' => value['z'], 'path' => value['path'] }
+          rarity = value['rarity']
+          if (!rarity_list.empty?) && (!rarity_list.include? rarity)
+            next
+          end
+
+          attribute = value['attribute']
+          if (!attribute_list.empty?) && (!attribute_list.include? attribute)
+            next
+          end
+
+          failure_result_list << {
+            'word' => word,
+            'file_name' => value['file_name'],
+            'crown' => value['crown'],
+            'path' => value['path'],
+            'small_path' => value['small_path'],
+            'rarity' => rarity,
+            'attribute' => attribute,
+            'text' => value['text']
+          }
         end
       end
     end
@@ -112,7 +215,8 @@ end
 $ahoCorasick = AhoCorasick.new
 # $ahoCorasick.Build 'ab', 'bc', 'bab', 'd', 'abcde'
 # $ahoCorasick.BuildFromFile 'mydata/input.txt'
-$ahoCorasick.BuildFromResourceJson 'mydata/sample_json.json'
+# $ahoCorasick.BuildFromResourceJson 'mydata/sample_json.json'
+$ahoCorasick.BuildFromCsv 'mydata/csv/Card_master.csv'
 
 # ahoCorasick.PrintTri
 # ahoCorasick.Save
@@ -121,7 +225,7 @@ $ahoCorasick.BuildFromResourceJson 'mydata/sample_json.json'
 # ahoCorasick.Load
 # now2 = Time.new;
 # p now2
-p $ahoCorasick.GetNearStr "ui_"
+# p $ahoCorasick.GetNearStr "ui_"
 # now3 = Time.new;
 # p now3
 # ahoCorasick.PrintTri

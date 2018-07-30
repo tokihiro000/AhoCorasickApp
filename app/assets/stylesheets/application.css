@@ -63,7 +63,7 @@
    color: #FA5858;
    border-left: solid 6px #FA5858;/*左側の線*/
    background: #F6CECE;/*背景色*/
-   margin-bottom: 3px;/*下のバーとの余白*/
+   /* margin-bottom: 3px;/*下のバーとの余白*/ */
    line-height: 1.5;
    padding: 0.5em;
    list-style-type: none!important;/*ポチ消す*/
@@ -102,11 +102,10 @@
    list-style-type: none!important;/*ポチ消す*/
  }
 
- #ajax-response-wrapper-aho > ul li, ol li {
+ #ajax-response-wrapper-aho > ul li {
    color: #FA5858;
    border-left: solid 6px #FA5858;/*左側の線*/
    background: #F6CECE;/*背景色*/
-   margin-bottom: 3px;/*下のバーとの余白*/
    line-height: 1.5;
    padding: 0.5em;
    list-style-type: none!important;/*ポチ消す*/
@@ -154,10 +153,28 @@
   padding: 0.5em 0;
 }
 
+.select_radio_button {
+  margin-left: 20px;
+  position:relative;
+}
+
+.check_box_group {
+}
+
+.select_check_box {
+  margin-left: 20px;
+  position:relative;
+}
+
 .label_class {
    display:block;
    float:left;
    width:145px;
+}
+
+.search_option_label {
+   display:inline-block;
+   color: #668ad8;
 }
 
 .img_class {

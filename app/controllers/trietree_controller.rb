@@ -5,7 +5,7 @@ class TrietreeController < ApplicationController
     path = params[:path]
     filename = params[:filename]
     filetype = params[:filetype]
-    file_path = filetype == 'zip' ? 'public/download/' + path : 'public/out/' + path
+    file_path = 'public' + path
     send_file(file_path, filename: filename)
   end
 
@@ -17,13 +17,23 @@ class TrietreeController < ApplicationController
   def ajax_action
     if params[:ajax_handler] == 'key_request'
       keyword = params[:keyword]
+      search_type = params[:search_type][:category]
+      rarity_list = params[:rarity] == nil ? [] : params[:rarity].keys.map {|rarity| rarity.to_i}
+      attribute_list = params[:attribute] == nil ? [] : params[:attribute].keys.map {|attribute| attribute.to_i}
 
       $request_keyword = keyword
       @request_keyword = keyword
-      list = $ahoCorasick.GetNearStr keyword
       @enable_failure_search_word_length = $ahoCorasick.enable_failure_search_word_length
-      @data = list[0]
-      @failure_data = list[1]
+
+      if keyword.length == 0
+        @data = []
+        @failure_data = []
+      else
+        list = $ahoCorasick.GetNearStr keyword, search_type, rarity_list, attribute_list
+        @data = list[0]
+        @failure_data = list[1]
+      end
+
       render
     end
   end

@@ -1,9 +1,7 @@
-<h3><%= $const_info[$env_info["env"]]["title"] %>リソース検索</h3>
-<p>最終同期日時: <%= $update_time %></p>
+<h3>gang1カードリソース検索</h3>
 <div id="description">
   <ul>
-    <li>本番で使われているダウンロードリソースをファイル名で検索できます</li>
-    <li>data_update_manageで指定されている全zipが対象です</li>
+    <li>gang1で使われていた画像をカード名や冠名で検索できます</li>
     <li>data_update_manageでdeletedフラグが立っているものは無視します</li>
     <li><i class="fas fa-file-download faa-bounce animated fa-fw"></i>←このアイコンがあるものはクリックでダウンロードできます</li>
   </ul>
@@ -16,6 +14,33 @@
         <span class="input__label-content input__label-content--minoru">前方一致で検索結果が表示されます</span>
     </label>
 </span>
+
+<div style="margin:15px">
+  <label class="search_option_label">検索対象</label>
+  <div class="display:inline-block">
+    <label><%= radio_button 'search_type', 'category', 'card_name', {:checked => true, :class => "select_radio_button"} %>カード名</label>
+    <label><%= radio_button 'search_type', 'category', 'crown', {:class => "select_radio_button"} %>冠名</label>
+  </div>
+</div>
+
+<div style="margin:15px">
+  <label class="search_option_label">レア度でフィルタ(チェックしなければ全レア度)</label>
+  <div class="display:inline-block">
+    <% $ahoCorasick.rarity_set.sort.each do |rarity| %>
+      <label><%= check_box 'rarity', rarity, {:class => "select_check_box"}, true, false %> <%= rarity %></label>
+    <% end %>
+  </div>
+</div>
+
+<div style="margin:15px">
+  <label class="search_option_label">属性でフィルタ(チェックしなければ全属性)</label>
+  <div class="check_box_group">
+    <% $ahoCorasick.attribute_set.sort.each do |attribute| %>
+      <label><%= check_box 'attribute', attribute, {:class => "select_check_box"}, true, false %> <%= attribute %></label>
+    <% end %>
+  </div>
+</div>
+
 <%= submit_tag('send', :class => 'btn btn-primary btn-sm', :type => 'hidden', :id => 'submit_btn') -%>
 <% end %>
 
