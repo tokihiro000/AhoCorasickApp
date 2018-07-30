@@ -53,7 +53,6 @@ public
       card_name = name
       name.gsub(/【(.*?)】(.+)/) { |match|
         crown = $1
-        card_name = $2
       }
 
       if crown != "no name"
