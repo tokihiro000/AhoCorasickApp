@@ -36,6 +36,43 @@ private
   end
 
 public
+  def getAttributeStr attribute
+    attribute_str = 'Unknown'
+    case attribute
+    when 1 then
+      attribute_str = '虎'
+    when 2 then
+      attribute_str = '龍'
+    when 3 then
+      attribute_str = '鳳'
+    end
+
+    return attribute_str
+  end
+
+  def getRarityStr rarity
+    rarity_str = 'Unknown'
+    case rarity
+    when 1 then
+      rarity_str = 'ノーマル'
+    when 2 then
+      rarity_str = 'ハイノーマル'
+    when 3 then
+      rarity_str = 'レア'
+    when 4 then
+      rarity_str = 'ハイレア'
+    when 5 then
+      rarity_str = 'Sレア'
+    when 6 then
+      rarity_str = 'SSレア'
+    when 7 then
+      rarity_str = 'レジェンド'
+    when 8 then
+      rarity_str = 'Sレジェンド'
+    end
+    return rarity_str
+  end
+
   def BuildFromCsv(file_name)
     csv_data = CSV.read(file_name, headers: true)
     csv_data.each do |data|
@@ -52,6 +89,9 @@ public
       crown = "no name"
       card_name = name
       name.gsub(/【(.*?)】(.+)/) { |match|
+        crown = $1
+      }
+      name.gsub(/\[(.*?)\](.+)/) { |match|
         crown = $1
       }
 

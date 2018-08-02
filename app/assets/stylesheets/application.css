@@ -125,8 +125,18 @@
    margin-bottom: 0px;
  }
 
+ #ajax-response-wrapper > ul > .comment {
+   margin-bottom: 0px;
+   height: 200px
+ }
+
  #ajax-response-wrapper-aho > ul > .info {
    margin-bottom: 0px;
+ }
+
+ #ajax-response-wrapper-aho > ul > .comment {
+   margin-bottom: 0px;
+   height: 200px
  }
 
  #ajax-response-wrapper > ul > .info_last {

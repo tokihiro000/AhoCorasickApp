@@ -27,7 +27,10 @@
   <label class="search_option_label">レア度でフィルタ(チェックしなければ全レア度)</label>
   <div class="display:inline-block">
     <% $ahoCorasick.rarity_set.sort.each do |rarity| %>
-      <label><%= check_box 'rarity', rarity, {:class => "select_check_box"}, true, false %> <%= rarity %></label>
+      <label><%= check_box 'rarity', rarity, {:class => "select_check_box"}, true, false %>
+        <% rarity_str = $ahoCorasick.getRarityStr rarity %>
+        <%= rarity_str %>
+      </label>
     <% end %>
   </div>
 </div>
@@ -36,7 +39,10 @@
   <label class="search_option_label">属性でフィルタ(チェックしなければ全属性)</label>
   <div class="check_box_group">
     <% $ahoCorasick.attribute_set.sort.each do |attribute| %>
-      <label><%= check_box 'attribute', attribute, {:class => "select_check_box"}, true, false %> <%= attribute %></label>
+      <label><%= check_box 'attribute', attribute, {:class => "select_check_box"}, true, false %>
+        <% attribute_str = $ahoCorasick.getAttributeStr attribute %>
+        <%= attribute_str %>
+      </label>
     <% end %>
   </div>
 </div>

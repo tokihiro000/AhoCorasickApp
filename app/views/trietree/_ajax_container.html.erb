@@ -8,11 +8,11 @@
       <!-- 冠名 -->
       <li class="info"><font color="#191970"><label class="label_class">冠名:</label></font><%= obj["crown"] %></li>
       <!-- レア度 -->
-      <li class="info"><font color="#191970"><label class="label_class">レア度:</label></font><%= obj["rarity"] %></li>
+      <li class="info"><font color="#191970"><label class="label_class">レア度:</label></font><%= $ahoCorasick.getRarityStr obj["rarity"] %></li>
       <!-- 属性 -->
-      <li class="info"><font color="#191970"><label class="label_class">属性:</label></font><%= obj["attribute"] %></li>
+      <li class="info"><font color="#191970"><label class="label_class">属性:</label></font><%= $ahoCorasick.getAttributeStr obj["attribute"] %></li>
       <!-- 説明 -->
-      <li class="info"><%= obj["text"] == nil ? '' : obj["text"].html_safe %></li>
+      <li class="comment"><%= obj["text"] == nil ? '' : obj["text"].html_safe %></li>
 
       <!-- 大きい画像 -->
       <% if obj["path"].end_with? ".png", ".jpg", ".jpeg" %>
