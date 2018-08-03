@@ -13,7 +13,7 @@ $(document).ready(function() {
 })
 
 $(document).ready(function() {
-  $('.card_id').keyup(function() {
+  $('.card_id').change(function() {
     $('#submit_btn').submit()
     $("#submit_btn").prop("disabled", true);
   })

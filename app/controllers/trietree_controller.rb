@@ -1,5 +1,5 @@
 class TrietreeController < ApplicationController
-  $request_keyword =  ""
+  protect_from_forgery except: :near
 
   def download
     path = params[:path]
@@ -10,31 +10,54 @@ class TrietreeController < ApplicationController
   end
 
   def near
-    ajax_action unless params[:ajax_handler].blank?
-    puts "This is not Ajax Action"
+    print "current page is ", params[:page], "\n"
+    if params[:ajax_handler].blank?
+
+      if $request_keyword == nil
+        puts "keyword is nil"
+      else
+        puts "ajax keyword is nil"
+        # print "keyword is ", $request_keyword, "\n"
+        # puts @request_keyword
+        # search_type = params[:search_type][:category]
+        # rarity_list = params[:rarity] == nil ? [] : params[:rarity].keys.map {|rarity| rarity.to_i}
+        # attribute_list = params[:attribute] == nil ? [] : params[:attribute].keys.map {|attribute| attribute.to_i}
+        # ajax_action params[:page].to_i
+      end
+    else
+      # if params[:ajax_handler] == 'key_request'
+        page = params[:page] == nil ? 1 : params[:page].to_i
+        if page == 1
+          $request_keyword = params[:keyword]
+          $search_type = params[:search_type][:category]
+          $rarity_list = params[:rarity] == nil ? [] : params[:rarity].keys.map {|rarity| rarity.to_i}
+          $attribute_list = params[:attribute] == nil ? [] : params[:attribute].keys.map {|attribute| attribute.to_i}
+        end
+        ajax_action page
+      # end
+    end
   end
 
-  def ajax_action
-    if params[:ajax_handler] == 'key_request'
-      keyword = params[:keyword]
-      search_type = params[:search_type][:category]
-      rarity_list = params[:rarity] == nil ? [] : params[:rarity].keys.map {|rarity| rarity.to_i}
-      attribute_list = params[:attribute] == nil ? [] : params[:attribute].keys.map {|attribute| attribute.to_i}
-
-      $request_keyword = keyword
-      @request_keyword = keyword
+  def ajax_action current_page
+      @request_keyword = $request_keyword
       @enable_failure_search_word_length = $ahoCorasick.enable_failure_search_word_length
 
-      if keyword.length == 0
+      @current_page = current_page
+      @max_page = 1
+
+      if @request_keyword.length == 0
+        puts "ajax action request_keyword is nil"
         @data = []
         @failure_data = []
       else
-        list = $ahoCorasick.GetNearStr keyword, search_type, rarity_list, attribute_list
+        print "ajax action request_keyword is ", @request_keyword, "\n"
+        list = $ahoCorasick.GetNearStr @request_keyword, $search_type, $rarity_list, $attribute_list
         @data = list[0]
         @failure_data = list[1]
+        @current_page = list[2]
+        @max_page = list[3]
       end
 
       render
     end
-  end
 end

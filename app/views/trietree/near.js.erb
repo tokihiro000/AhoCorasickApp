@@ -11,3 +11,10 @@ if ($('#ajax-response-wrapper-aho').size() === 0) {
   $('#ajax-response-wrapper-aho').html('');
 }
 $('#ajax-response-wrapper-aho').html('<%=j render partial: "ajax_container_failure", collections: @failure_data %>');
+
+if ($('#common-pager').size() === 0) {
+  $('body').append('<div id="common-pager"></div>');
+} else {
+  $('#common-pager').html('');
+}
+$('#common-pager').html('<%=j render partial: "ajax_container_pager", collections: @current_page %>');

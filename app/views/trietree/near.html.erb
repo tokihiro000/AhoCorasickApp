@@ -1,17 +1,17 @@
 <h3>gang1カードリソース検索</h3>
 <div id="description">
   <ul>
-    <li>gang1で使われていた画像をカード名や冠名で検索できます</li>
-    <li>左は前方一致検索、右は前方一致を除く部分一致検索です</li>
+    <li>gang1で使われていた画像を検索できます</li>
     <li><i class="fas fa-file-download faa-bounce animated fa-fw"></i>←このアイコンがあるものはクリックでダウンロードできます</li>
   </ul>
 </div>
-<%= form_tag({:controller => 'trietree', :action => 'near'}, :remote => true, :class => 'form-ajax') do -%>
+<%= form_tag({:controller => 'trietree', :action => 'near'}, :id => 'form1_id', :name => 'keyword_form', :remote => true, :class => 'form-ajax') do -%>
 <%= hidden_field_tag :ajax_handler, 'key_request' -%>
+<%= hidden_field_tag :page, 1 -%>
 <span class="input input--minoru">
     <input class="input__field input__field--minoru keyword" type="text" id="input-13" name="keyword" />
     <label class="input__label input__label--minoru" for="input-13">
-        <span class="input__label-content input__label-content--minoru">左のリストは前方一致、右のリストは部分一致の検索結果</span>
+        <span class="input__label-content input__label-content--minoru">部分一致で検索します</span>
     </label>
 </span>
 
@@ -52,3 +52,4 @@
 
 <div id="ajax-response-wrapper"></div>
 <div id="ajax-response-wrapper-aho"></div>
+<div id="common-pager"></div>

@@ -16,7 +16,6 @@ class AhoCorasick
     @crown_key_list = []
     @search_time_limit = $const_info == nil ? 1.0 : $const_info["SearchTimeLimit"]
     @search_word_count = $const_info == nil ? 10 : $const_info["SearchWordCount"]
-    @failure_word_count = $const_info == nil ? 10 : $const_info["FailureWordCount"]
     @enable_failure_search_word_length = $const_info == nil ? 5 : $const_info["EnableFailureSearchWordLength"]
   end
 
@@ -156,9 +155,9 @@ public
 
     search_key_result = []
     if search_type == "card_name"
-      search_key_result = @search_key_list.grep(/^#{target}/)
+      search_key_result = @search_key_list.grep(/#{target}/)
     else
-      crown_name_result = @crown_key_list.grep(/^#{target}/)
+      crown_name_result = @crown_key_list.grep(/#{target}/)
       crown_name_result.each do |crown|
         @crown_name_map[crown].each do |search_key|
           search_key_result << search_key
@@ -167,12 +166,17 @@ public
     end
 
     search_result_size = search_key_result.count
+    max_page =  (search_result_size / @search_word_count) + 1
     if search_result_size > @search_word_count
       search_key_result = search_key_result[0, @search_word_count]
     end
 
-    search_result_list = []
+    count = 0
+    search_result_list_1 = []
+    search_result_list_2 = []
     search_key_result.each do |word|
+      store_list = count % 2 == 0 ? search_result_list_1 : search_result_list_2
+      count += 1
       @search_map[word].each do |value|
         rarity = value['rarity']
         if (!rarity_list.empty?) && (!rarity_list.include? rarity)
@@ -184,7 +188,7 @@ public
           next
         end
 
-        search_result_list << {
+        store_list << {
           'word' => word,
           'file_name' => value['file_name'],
           'crown' => value['crown'],
@@ -197,40 +201,7 @@ public
       end
     end
 
-    failure_result_list = []
-    if target.length >= @enable_failure_search_word_length
-      search_key_result = @search_key_list.grep(/.#{target}/)
-      if search_result_size > @failure_word_count
-        search_key_result = search_key_result[0, @failure_word_count]
-      end
-
-      search_key_result.each do |word|
-        @search_map[word].each do |value|
-          rarity = value['rarity']
-          if (!rarity_list.empty?) && (!rarity_list.include? rarity)
-            next
-          end
-
-          attribute = value['attribute']
-          if (!attribute_list.empty?) && (!attribute_list.include? attribute)
-            next
-          end
-
-          failure_result_list << {
-            'word' => word,
-            'file_name' => value['file_name'],
-            'crown' => value['crown'],
-            'path' => value['path'],
-            'small_path' => value['small_path'],
-            'rarity' => rarity,
-            'attribute' => attribute,
-            'text' => value['text']
-          }
-        end
-      end
-    end
-
-    return [search_result_list, failure_result_list]
+    return [search_result_list_1, search_result_list_2, 1, max_page]
   end
 end
 

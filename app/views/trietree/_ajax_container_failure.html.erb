@@ -18,30 +18,33 @@
     <li class="comment"><%= obj["text"] == nil ? '' : obj["text"].html_safe %></li>
     <!-- 大きい画像  -->
     <% if obj["path"].end_with? ".png", ".jpg", ".jpeg" %>
-      <li class="info"><font color="#191970"><label class="label_class">リソースパス:</label></font><%= obj["path"] %></li>
+      <li class="info"><font color="#191970"><label class="label_class">リソースパス:</label></font>
+        <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
+          <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["path"] %>
+        <% end %>
+      </li>
       <li class="info"><%= image_tag obj["path"], :class => 'img_class' %></li>
     <% else %>
       <li class="info"><font color="#191970"><label class="label_class">リソースパス:</label></font>Not Found</li>
     <% end %>
     <!-- 小さい画像  -->
     <% if obj["small_path"].end_with? ".png", ".jpg", ".jpeg" %>
-      <li class="info"><font color="#191970"><label class="label_class">リソースパス:</label></font><%= obj["small_path"] %></li>
-      <li class="info_last"><%= image_tag obj["small_path"], :class => 'img_class' %></li>
+    <li class="info"><font color="#191970"><label class="label_class">リソースパス:</label></font>
+      <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["small_path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
+        <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["small_path"] %>
+      <% end %>
+    </li>
+    <li class="info_last"><%= image_tag obj["small_path"], :class => 'img_class' %></li>
     <% else %>
       <li class="info_last"><font color="#191970"><label class="label_class">リソースパス:</label></font>Not Found</li>
     <% end %>
   <% end %>
 </ul>
 <% else %>
-  <ul>
-    <li class="title">
-      <% if (@request_keyword.length < @enable_failure_search_word_length) %>
-      <font color="#191970"><label class="label_class"></label></font>
-        <i></i>検索結果が多いので【<%= @enable_failure_search_word_length - 1 %>】文字以下の場合は部分文字列検索を行いません
-      <% else %>
-        <font color="#191970"><label class="label_class">Not Found</label></font>
-          <i></i>【<%= @request_keyword %>】に該当するリソースは見つかりませんでした
-      <% end %>
-    </li>
-  </ul>
+<ul>
+  <li class="title">
+    <font color="#191970"><label class="label_class">Not Found</label></font>
+      <i></i>【<%= @request_keyword %>】に該当するリソースは見つかりませんでした
+  </li>
+</ul>
 <% end %>
