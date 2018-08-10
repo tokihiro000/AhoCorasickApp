@@ -3,15 +3,18 @@
     $('.pager_link').click(function(event){
         console.log("click!!!!");
       	var target = $(event.target);
-        console.log(target[0].attributes[1].value);
-        // Rails.fire($("#form1_id")[0], "submit");
+        const page_number = target[0].attributes[1].value
+        $('#page').val(page_number);
+        console.log($('#page').val());
+        $('body, html').animate({ scrollTop: 340 }, 50);
+        Rails.fire($("#form1_id")[0], "submit");
     });
   });
 </script>
 <% if @current_page != nil %>
   <% if @current_page != nil && @max_page != nil%>
-  <% @view_min = [1, @current_page - 2].max %>
-  <% @view_max = [@max_page, @current_page + 2].min %>
+  <% @view_min = [1, @current_page - 4].max %>
+  <% @view_max = [@max_page, @current_page + 4].min %>
     <div id="global">
       <ul class="pageNav01">
         <% (@view_min..@view_max).each do |page_index| %>

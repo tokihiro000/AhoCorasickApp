@@ -7,19 +7,20 @@
 </div>
 <%= form_tag({:controller => 'trietree', :action => 'near'}, :id => 'form1_id', :name => 'keyword_form', :remote => true, :class => 'form-ajax') do -%>
 <%= hidden_field_tag :ajax_handler, 'key_request' -%>
-<%= hidden_field_tag :page, 1 -%>
+<%= hidden_field_tag :page, 1-%>
 <span class="input input--minoru">
     <input class="input__field input__field--minoru keyword" type="text" id="input-13" name="keyword" />
     <label class="input__label input__label--minoru" for="input-13">
-        <span class="input__label-content input__label-content--minoru">部分一致で検索します</span>
+        <span class="input__label-content input__label-content--minoru">Enterボタン押下で検索</span>
     </label>
 </span>
 
 <div style="margin:15px">
-  <label class="search_option_label">検索対象</label>
+  <label class="search_option_label">検索・一覧表示</label>
   <div class="display:inline-block">
-    <label><%= radio_button 'search_type', 'category', 'card_name', {:checked => true, :class => "select_radio_button"} %>カード名</label>
-    <label><%= radio_button 'search_type', 'category', 'crown', {:class => "select_radio_button"} %>冠名</label>
+    <label><%= radio_button 'search_type', 'category', 'card_name', {:checked => true, :class => "select_radio_button"} %>カード名検索</label>
+    <label><%= radio_button 'search_type', 'category', 'crown', {:class => "select_radio_button"} %>冠名検索</label>
+    <label><%= radio_button 'search_type', 'category', 'all', {:class => "select_radio_button"} %>一覧表示</label>
   </div>
 </div>
 

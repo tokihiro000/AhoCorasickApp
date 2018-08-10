@@ -94,19 +94,19 @@ public
         crown = $1
       }
 
-      if crown != "no name"
-        createIndex @crown_name_map, crown, card_name
-      end
-
       # 画像パス。存在チェックもやります(´・ω・)
       file_name = data["card_id"] + '.jpg'
       image_path = '/card/large/' + file_name
       if !FileTest.exists? ('public' + image_path)
-        image_path = ''
+        next
       end
       image_path_small = '/card/small/' + file_name
       if !FileTest.exists? ('public' + image_path_small)
-        image_path_small = ''
+        next
+      end
+
+      if crown != "no name"
+        createIndex @crown_name_map, crown, card_name
       end
 
       # レアリティ
@@ -149,12 +149,16 @@ public
     make
   end
 
-  def GetNearStr target, search_type, rarity_list, attribute_list
-    target = target.gsub(/\[/, "\\\[")
-    target = target.gsub(/\]/, "\\\]")
+  def GetNearStr target, search_type, rarity_list, attribute_list, target_page
+    if target != nil && target.length != 0
+      target = target.gsub(/\[/, "\\\[")
+      target = target.gsub(/\]/, "\\\]")
+    end
 
     search_key_result = []
-    if search_type == "card_name"
+    if search_type == "all"
+      search_key_result = @search_key_list
+    elsif search_type == "card_name"
       search_key_result = @search_key_list.grep(/#{target}/)
     else
       crown_name_result = @crown_key_list.grep(/#{target}/)
@@ -165,16 +169,37 @@ public
       end
     end
 
-    search_result_size = search_key_result.count
-    max_page =  (search_result_size / @search_word_count) + 1
-    if search_result_size > @search_word_count
-      search_key_result = search_key_result[0, @search_word_count]
+    word_list = []
+    search_key_result.each do |word|
+      @search_map[word].each do |value|
+        rarity = value['rarity']
+        if (!rarity_list.empty?) && (!rarity_list.include? rarity)
+          next
+        end
+
+        attribute = value['attribute']
+        if (!attribute_list.empty?) && (!attribute_list.include? attribute)
+          next
+        end
+
+        word_list << word
+      end
+    end
+
+
+    list_size = word_list.count
+    max_page =  (list_size / @search_word_count) + 1
+    if list_size > @search_word_count
+      index = ((target_page - 1) * @search_word_count) + 1
+      count = [list_size - index, @search_word_count].min
+      word_list = word_list[index, count]
+      print "index: ", index, " count: ", count, "\n"
     end
 
     count = 0
     search_result_list_1 = []
     search_result_list_2 = []
-    search_key_result.each do |word|
+    word_list.each do |word|
       store_list = count % 2 == 0 ? search_result_list_1 : search_result_list_2
       count += 1
       @search_map[word].each do |value|
@@ -201,7 +226,7 @@ public
       end
     end
 
-    return [search_result_list_1, search_result_list_2, 1, max_page]
+    return [search_result_list_1, search_result_list_2, max_page]
   end
 end
 
