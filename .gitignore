@@ -40,3 +40,5 @@
 /public/download
 /public/out
 /public/card
+*.png
+*.jpg
