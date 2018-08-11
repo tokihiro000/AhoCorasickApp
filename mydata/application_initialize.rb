@@ -199,8 +199,21 @@ public
     count = 0
     search_result_list_1 = []
     search_result_list_2 = []
+    search_result_list_3 = []
     word_list.each do |word|
-      store_list = count % 2 == 0 ? search_result_list_1 : search_result_list_2
+      store_list = search_result_list_1
+      case_value = count % 3
+      case case_value
+      when 0 then
+      when 1 then
+        store_list = search_result_list_2
+      when 2 then
+        store_list = search_result_list_3
+      else
+        # どの値にも一致しない場合に行う処理
+        store_list = search_result_list_1
+      end
+
       count += 1
       @search_map[word].each do |value|
         rarity = value['rarity']
@@ -226,7 +239,7 @@ public
       end
     end
 
-    return [search_result_list_1, search_result_list_2, max_page]
+    return [search_result_list_1, search_result_list_2, search_result_list_3, max_page]
   end
 end
 

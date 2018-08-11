@@ -24,7 +24,7 @@ $(document).ready(function() {
 })
 
 $(document).ready(function() {
-  $('input').change(function() {
+  $("input[name='search_type[category]']").change(function() {
     var value = $("input[name='search_type[category]']:checked").val()
     $('#page').val(1);
     if (value == 'all') {
@@ -35,6 +35,17 @@ $(document).ready(function() {
       $(".keyword").prop('disabled', false);
     }
 
+    $('#submit_btn').submit()
+    $("#submit_btn").prop("disabled", true);
+  });
+  $(document)
+  .ajaxStart(function() { $("#submit_btn").prop("disabled", true); })
+  .ajaxComplete(function() { $("#submit_btn").prop("disabled", false); })
+})
+
+$(document).ready(function() {
+  $(".select_check_box").change(function() {
+    $('#page').val(1);
     $('#submit_btn').submit()
     $("#submit_btn").prop("disabled", true);
   });

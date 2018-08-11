@@ -1,6 +1,5 @@
-<% if @data != nil && @data.count > 0 %>
+<% if obj != nil && obj.count > 0 %>
   <ul>
-    <% @data.each do |obj| %>
       <li class="title">
         <font color="#191970"><label class="label_class">カード名:</label></font>
         <%= obj["word"] %>
@@ -16,28 +15,27 @@
 
       <!-- 大きい画像 -->
       <% if obj["path"].end_with? ".png", ".jpg", ".jpeg" %>
-        <li class="info"><font color="#191970"><label class="label_class">リソースパス:</label></font>
+        <li class="info"><font color="#191970"><label class="label_class">バナー:</label></font>
           <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
             <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["path"] %>
           <% end %>
         </li>
         <li class="info"><%= image_tag obj["path"], :class => 'img_class' %></li>
       <% else %>
-        <li class="info"><font color="#191970"><label class="label_class">リソースパス:</label></font>Not Found</li>
+        <li class="info"><font color="#191970"><label class="label_class">バナー:</label></font>Not Found</li>
       <% end %>
 
       <!-- 小さい画像  -->
       <% if obj["small_path"].end_with? ".png", ".jpg", ".jpeg" %>
-        <li class="info"><font color="#191970"><label class="label_class">リソースパス:</label></font>
+        <li class="info"><font color="#191970"><label class="label_class">カード:</label></font>
           <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["small_path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
             <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["small_path"] %>
           <% end %>
         </li>
         <li class="info_last"><%= image_tag obj["small_path"], :class => 'img_class' %></li>
       <% else %>
-        <li class="info_last"><font color="#191970"><label class="label_class">リソースパス:</label></font>Not Found</li>
+        <li class="info_last"><font color="#191970"><label class="label_class">カード:</label></font>Not Found</li>
       <% end %>
-    <% end %>
   </ul>
 <% else %>
   <ul>

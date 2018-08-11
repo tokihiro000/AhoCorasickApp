@@ -17,14 +17,14 @@
   font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック';
   display:inline-block;
   vertical-align: top;
-  width: 620px;
+  width: 400px;
  }
 
  #ajax-search-card-aho {
    font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック';
    display:inline-block;
    vertical-align: top;
-   width: 620px;
+   width: 400px;
  }
 
  #ajax-search-card > ul, ol {
@@ -69,31 +69,24 @@
    list-style-type: none!important;/*ポチ消す*/
  }
 
- #ajax-response-wrapper {
+ .aho-contents {
    font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック';
    display:inline-block;
    vertical-align: top;
-   width: 620px;
+   width: 400px;
  }
 
- #ajax-response-wrapper-aho {
-  font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック';
-  display:inline-block;
-  vertical-align: top;
-  width: 620px;
-  }
-
- #ajax-response-wrapper > ul, ol {
+ .aho-contents > ul, ol {
    padding: 0;
    position: relative;
  }
 
- #ajax-response-wrapper-aho > ul, ol {
+ /* .aho-contents-div2 > ul, ol {
    padding: 0;
    position: relative;
- }
+ } */
 
- #ajax-response-wrapper > ul li {
+ .aho-contents > ul li {
    color: #2d8fdd;
    border-left: solid 6px #2d8fdd;/*左側の線*/
    background: #f1f8ff;/*背景色*/
@@ -102,53 +95,40 @@
    list-style-type: none!important;/*ポチ消す*/
  }
 
- #ajax-response-wrapper-aho > ul li {
+ /* .aho-contents-div2 > ul li {
    color: #2d8fdd;
-   border-left: solid 6px #2d8fdd;/*左側の線*/
-   background: #f1f8ff;/*背景色*/
+   border-left: solid 6px #2d8fdd;
+   background: #f1f8ff;
    line-height: 1.5;
    padding: 0.5em;
-   list-style-type: none!important;/*ポチ消す*/
- }
+   list-style-type: none!important;
+ } */
 
- #ajax-response-wrapper > ul > .title {
+ .aho-contents > ul > .title {
    background: #afeeee;
    margin-bottom: 0px;
  }
 
- #ajax-response-wrapper-aho > ul > .title {
+ /* .aho-contents-div2 > ul > .title {
    background: #afeeee;
    margin-bottom: 0px;
- }
+ } */
 
- #ajax-response-wrapper > ul > .info {
+ .aho-contents > ul > .info {
    margin-bottom: 0px;
  }
 
- #ajax-response-wrapper > ul > .comment {
+ .aho-contents > ul > .comment {
    margin-bottom: 0px;
-   height: 200px
+   height: 300px
  }
 
- #ajax-response-wrapper-aho > ul > .info {
-   margin-bottom: 0px;
- }
-
- #ajax-response-wrapper-aho > ul > .comment {
-   margin-bottom: 0px;
-   height: 200px
- }
-
- #ajax-response-wrapper > ul > .info_last {
-   margin-bottom: 10px;
- }
-
- #ajax-response-wrapper-aho > ul > .info_last {
+ .aho-contents > ul > .info_last {
    margin-bottom: 10px;
  }
 
 #description {
-  width: 620px;
+  width: 400px;
 }
 
 #description > ul, ol{
@@ -208,7 +188,7 @@
 .label_class {
    display:block;
    float:left;
-   width:145px;
+   width:105px;
 }
 
 .search_option_label {
