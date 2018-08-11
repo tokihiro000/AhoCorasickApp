@@ -1,0 +1,114 @@
+<html>
+<head>
+<style type="text/css">
+.sprite {
+    width: 498px;
+    height: 664px;
+    margin: 100px auto;
+    background: url(./sprite.png) no-repeat 0 0;
+}
+
+.css .sprite {
+    /*一秒間に動くフレーム数*/
+    -webkit-animation:
+      play1 1.0s steps(10) 0.0s 1 normal none,
+      play2 1.0s steps(10) 1.0s 1 normal none,
+      play3 1.0s steps(10) 2.0s 1 normal forwards;
+
+    animation:
+      play1 1.0s steps(10) 0.0s 5 normal,
+      play2 1.0s steps(10) 1.0s 5 normal,
+      play3 1.0s steps(10) 2.0s 5 normal;
+}
+
+@-webkit-keyframes play3 {
+    /*一秒間に動くスタイル*/
+    0% {
+        background-position: 0px -1328px;
+    }
+
+    100% {
+        background-position: -4980px -1328px;
+    }
+}
+
+@keyframes play3 {
+    /*一秒間に動くスタイル*/
+    0% {
+        background-position: 0px -1328px;
+    }
+    100% {
+        background-position: -4980px -1328px;
+    }
+}
+
+@-webkit-keyframes play2 {
+    /*一秒間に動くスタイル*/
+    0% {
+        background-position: 0px -664px;
+    }
+
+    100% {
+        background-position: -4980px -664px;
+    }
+}
+
+@keyframes play2 {
+    /*一秒間に動くスタイル*/
+    0% {
+        background-position: 0px -664px;
+    }
+    100% {
+        background-position: -4980px -664px;
+    }
+}
+
+
+@-webkit-keyframes play1 {
+    /*一秒間に動くスタイル*/
+    0% {
+        background-position: 0px 0;
+    }
+
+    100% {
+        background-position: -4980px 0;
+    }
+}
+
+@keyframes play1 {
+    /*一秒間に動くスタイル*/
+    0% {
+        background-position: 0px 0;
+    }
+    100% {
+        background-position: -4980px 0;
+    }
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+</head>
+<body>
+<section class="section css">
+   <h2>CSS</h2>
+   <div class="sprite"></div>
+</section>
+
+ <script type="text/javascript">
+  var selector_sprite = document.querySelector(".sprite");
+  selector_sprite.addEventListener("animationend",function(e){
+     console.log("animation end");
+     $('.css').css({'background-position': 0 + 'px ' + 0 + 'px'});
+     $('.sprite').css({'background-position': 100 + 'px ' + 100 + 'px'});
+  });
+
+  var selector_css = document.querySelector(".css");
+  selector_css.addEventListener("animationend",function(e){
+     console.log("animation end");
+     $('.css').css({'background-position': 0 + 'px ' + 0 + 'px'});
+     $('.sprite').css({'background-position': 100 + 'px ' + 100 + 'px'});
+  });
+
+ </script>
+</body>
+</html>
