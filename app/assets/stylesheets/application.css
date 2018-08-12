@@ -188,7 +188,7 @@
 .label_class {
    display:block;
    float:left;
-   width:105px;
+   width:85px;
 }
 
 .search_option_label {
@@ -207,4 +207,45 @@
 
 .link_failure:hover {
   color: #F01212;
+}
+
+.sprite {
+    /* background: url(/assets/img/dest4.jpg) no-repeat; */
+    /* width: 360px;
+    height: 480px; */
+    /* display: inline-block; */
+    /* background-size: cover; */
+}
+
+.css .sprite {
+    /*一秒間に動くフレーム数*/
+    -webkit-animation: play 1.0s steps(30) 0.0s infinite;
+    animation: play 1.0s steps(30) 0.0s infinite;
+}
+
+
+@-webkit-keyframes play {
+    /*一秒間に動くスタイル*/
+    0% {
+        background-position: 0px 0;
+        background-size: cover;
+    }
+
+    100% {
+        background-position: -10800px 0;
+        background-size: cover;
+    }
+}
+
+@keyframes play {
+  background-size: cover;
+    /*一秒間に動くスタイル*/
+    0% {
+        background-position: 0px 0;
+        /* background-size: cover; */
+    }
+    100% {
+        background-position: -10800px 0;
+        /* background-size: cover; */
+    }
 }

@@ -32,6 +32,12 @@
             <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["small_path"] %>
           <% end %>
         </li>
+        <!-- <li class="info_last">
+          <section class="section css">
+            <% path = "width: 360px; height: 480px; background: url(/assets/img/dest4.jpg) no-repeat; background-size: cover;" %>
+             <div class="sprite" style="<%= path %>"></div>
+          </section>
+        </li> -->
         <li class="info_last"><%= image_tag obj["small_path"], :class => 'img_class' %></li>
       <% else %>
         <li class="info_last"><font color="#191970"><label class="label_class">カード:</label></font>Not Found</li>
