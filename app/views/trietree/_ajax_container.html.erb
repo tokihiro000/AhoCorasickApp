@@ -27,7 +27,6 @@
 
       <!-- 小さい画像  -->
       <% if obj["small_path"].end_with? ".png", ".jpg", ".jpeg" %>
-        <% p obj %>
         <li class="info"><font color="#191970"><label class="label_class">カード:</label></font>
           <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["small_path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
             <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["small_path"] %>
