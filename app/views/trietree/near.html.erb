@@ -1,14 +1,14 @@
 <h3>gang1カードリソース検索</h3>
 <div id="description">
   <ul>
-    <li>gang1で使われていた画像を検索できます</li>
-    <li><i class="fas fa-file-download faa-bounce animated fa-fw"></i>←クリックでダウンロードできます</li>
+    <li>gang1で使われていた画像を検索・一覧表示できます</li>
+    <li><i class="fas fa-file-download faa-bounce animated fa-fw"></i>←このアイコンがついてる画像はクリックでダウンロードできます</li>
   </ul>
 </div>
-<%= form_tag({:controller => 'trietree', :action => 'near'}, :id => 'form1_id', :name => 'keyword_form', :remote => true, :class => 'form-ajax') do -%>
+<%= form_tag({:controller => 'trietree', :action => 'near'}, :id => 'form1_id', :name => 'keyword_form', :remote => true, :class => 'form-ajax', :autocomplete => "off") do -%>
 <%= hidden_field_tag :ajax_handler, 'key_request' -%>
 <%= hidden_field_tag :page, 1-%>
-<span class="input input--minoru">
+<span class="input">
     <input class="input__field input__field--minoru keyword" type="text" id="input-13" name="keyword" />
     <label class="input__label input__label--minoru" for="input-13">
         <span class="input__label-content input__label-content--minoru">Enterボタン押下で検索</span>

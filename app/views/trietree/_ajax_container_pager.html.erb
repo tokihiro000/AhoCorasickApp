@@ -1,11 +1,11 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $('.pager_link').click(function(event){
-        console.log("click!!!!");
+        prepare_load_func();
+        display_load_func();
       	var target = $(event.target);
         const page_number = target[0].attributes[1].value
         $('#page').val(page_number);
-        console.log($('#page').val());
         $('body, html').animate({ scrollTop: 340 }, 50);
         Rails.fire($("#form1_id")[0], "submit");
     });

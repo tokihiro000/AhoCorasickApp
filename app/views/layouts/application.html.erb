@@ -14,8 +14,52 @@
     <%= javascript_include_tag "application" %>
   </head>
   <body>
+    <div id="loader-bg">
+      <div id="loader">
+        <div class="sk-cube-grid">
+          <div class="sk-cube sk-cube1"></div>
+          <div class="sk-cube sk-cube2"></div>
+          <div class="sk-cube sk-cube3"></div>
+          <div class="sk-cube sk-cube4"></div>
+          <div class="sk-cube sk-cube5"></div>
+          <div class="sk-cube sk-cube6"></div>
+          <div class="sk-cube sk-cube7"></div>
+          <div class="sk-cube sk-cube8"></div>
+          <div class="sk-cube sk-cube9"></div>
+        </div>
+        <!-- <img src="img-loading.gif" width="80" height="80" alt="Now Loading..." />
+        <p>Now Loading...</p> -->
+      </div>
+    </div>
+  <div id="wrap">
     <%= yield %>
+  </div>
     <script src="/assets/js/classie.js"></script>
     <%= javascript_include_tag "my" %>
+    <script>
+      $(function() {
+        var h = $(window).height();
+
+        $('#wrap').css('display','none');
+        $('#loader-bg ,#loader').height(h).css('display','block');
+      });
+
+      $(window).load(function () { //全ての読み込みが完了したら実行
+        $('#loader-bg').delay(900).fadeOut(800);
+        $('#loader').delay(600).fadeOut(300);
+        $('#wrap').css('display', 'block');
+      });
+
+      //10秒たったら強制的にロード画面を非表示
+      $(function(){
+        setTimeout('stopload()',10000);
+      });
+
+      function stopload(){
+        $('#wrap').css('display','block');
+        $('#loader-bg').delay(900).fadeOut(800);
+        $('#loader').delay(600).fadeOut(300);
+      }
+    </script>
   </body>
 </html>
