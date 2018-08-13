@@ -73,6 +73,16 @@ public
   end
 
   def BuildFromCsv(file_name)
+    movie_image_map = {}
+    image_path = '/card/large/' + file_name
+    File.open("./mydata/csv/movie_card_list.txt", mode = "r"){|f|
+      f.each_line{|line|
+        card_id = line.chomp!
+        image_path = "/card/movie/" + card_id + ".jpg"
+        movie_image_map[card_id] = image_path
+      }
+    }
+
     csv_data = CSV.read(file_name, headers: true)
     csv_data.each do |data|
       name = data["name"]
@@ -95,7 +105,8 @@ public
       }
 
       # 画像パス。存在チェックもやります(´・ω・)
-      file_name = data["card_id"] + '.jpg'
+      card_id = data["card_id"]
+      file_name = card_id + '.jpg'
       image_path = '/card/large/' + file_name
       if !FileTest.exists? ('public' + image_path)
         next
@@ -117,6 +128,12 @@ public
       attribute = data["attribute"] == nil ? 0 : data["attribute"].to_i
       @attribute_set.add attribute
 
+      movie_flg = false
+      if movie_image_map.has_key? card_id
+        image_path_small = movie_image_map[card_id]
+        movie_flg = true
+      end
+
       value = {
         'path' => image_path,
         'small_path' => image_path_small,
@@ -124,7 +141,8 @@ public
         'crown' => crown,
         'rarity' => rarity,
         'attribute' => attribute,
-        'text' => data["card_text"]
+        'text' => data["card_text"],
+        'movie_flg' => movie_flg
       }
       createIndex @search_map, card_name, value
     end
@@ -234,7 +252,8 @@ public
           'small_path' => value['small_path'],
           'rarity' => rarity,
           'attribute' => attribute,
-          'text' => value['text']
+          'text' => value['text'],
+          'movie_flg' => value['movie_flg']
         }
       end
     end
