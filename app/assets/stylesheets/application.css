@@ -17,14 +17,14 @@
   font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック';
   display:inline-block;
   vertical-align: top;
-  width: 400px;
+  width: 378px;
  }
 
  #ajax-search-card-aho {
    font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック';
    display:inline-block;
    vertical-align: top;
-   width: 400px;
+   width: 378px;
  }
 
  #ajax-search-card > ul, ol {
@@ -73,7 +73,8 @@
    font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック';
    display:inline-block;
    vertical-align: top;
-   width: 400px;
+   margin-left: 15px;
+   width: 378px;
  }
 
  .aho-contents > ul, ol {
@@ -128,7 +129,7 @@
  }
 
 #description {
-  width: 400px;
+  width: 378px;
 }
 
 #description > ul, ol{
@@ -211,7 +212,7 @@
 
 .sprite {
     /* background: url(/assets/img/dest4.jpg) no-repeat; */
-    /* width: 360px;
+    /* width: 378px;
     height: 480px; */
     /* display: inline-block; */
     /* background-size: cover; */
