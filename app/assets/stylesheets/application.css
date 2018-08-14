@@ -263,8 +263,8 @@
 
 .css .sprite {
     /*一秒間に動くフレーム数*/
-    -webkit-animation: play 1.5s steps(30) 0.0s infinite;
-    animation: play 1.5s steps(30) 0.0s infinite;
+    -webkit-animation: play 2.0s steps(30) 0.0s infinite;
+    animation: play 2.0s steps(30) 0.0s infinite;
 }
 
 
