@@ -40,7 +40,7 @@
             </section>
           </li>
         <% else %>
-          <li class="info_last"><%= image_tag obj["small_path"], :class => 'img_class' %></li>
+          <li class="info_last"><img class="img_class" src="<%= obj["small_path"] %>"></li>
         <% end %>
       <% else %>
         <li class="info_last"><font color="#191970"><label class="label_class">カード:</label></font>Not Found</li>
