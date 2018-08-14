@@ -21,13 +21,7 @@
             <% if page_index == @current_page %>
               <li><span><%= page_index %></span></li>
             <% else %>
-              <li><a class="pager_link" value="<%= page_index %>"><%= page_index %></a>
-                <!-- <%= form_tag({:controller => 'trietree', :action => 'near'}, name: 'form1', :remote => true, :class => 'form-ajax') do %>
-                  <%= hidden_field_tag :ajax_handler, 'key_request' %>
-                  <%= hidden_field_tag :page, 2 %>
-
-                <% end %> -->
-              </li>
+              <li><a class="pager_link" value="<%= page_index %>"><%= page_index %></a></li>
             <% end %>
         <% end %>
       </ul>

@@ -211,7 +211,6 @@ public
       index = ((target_page - 1) * @search_word_count) + 1
       count = [list_size - index, @search_word_count].min
       word_list = word_list[index, count]
-      print "index: ", index, " count: ", count, "\n"
     end
 
     count = 0

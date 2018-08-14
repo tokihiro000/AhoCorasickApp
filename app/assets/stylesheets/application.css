@@ -125,11 +125,6 @@
    position: relative;
  }
 
- /* .aho-contents-div2 > ul, ol {
-   padding: 0;
-   position: relative;
- } */
-
  .aho-contents > ul li {
    color: #2d8fdd;
    border-left: solid 6px #2d8fdd;/*左側の線*/
@@ -139,35 +134,25 @@
    list-style-type: none!important;/*ポチ消す*/
  }
 
- /* .aho-contents-div2 > ul li {
-   color: #2d8fdd;
-   border-left: solid 6px #2d8fdd;
-   background: #f1f8ff;
-   line-height: 1.5;
-   padding: 0.5em;
-   list-style-type: none!important;
- } */
-
  .aho-contents > ul > .title {
+   text-align: left;
    background: #afeeee;
    margin-bottom: 0px;
  }
 
- /* .aho-contents-div2 > ul > .title {
-   background: #afeeee;
-   margin-bottom: 0px;
- } */
-
  .aho-contents > ul > .info {
+   text-align: left;
    margin-bottom: 0px;
  }
 
  .aho-contents > ul > .comment {
+   text-align: left;
    margin-bottom: 0px;
    height: 300px
  }
 
  .aho-contents > ul > .info_last {
+   text-align: left;
    margin-bottom: 10px;
  }
 
