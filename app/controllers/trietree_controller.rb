@@ -12,6 +12,7 @@ class TrietreeController < ApplicationController
   def near
     print "current page is ", params[:page], "\n"
     if params[:ajax_handler].blank?
+      # render
     else
       # if params[:ajax_handler] == 'key_request'
         page = params[:page] == nil ? 1 : params[:page].to_i

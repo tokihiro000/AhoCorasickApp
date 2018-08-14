@@ -15,37 +15,36 @@ display_load_func = function() {
 
 $(document).ready(function() {
   $('.keyword').change(function() {
+    console.log(".keyword change");
     prepare_load_func();
     display_load_func();
     $('#page').val(1);
-    $('#submit_btn').submit()
-    $("#submit_btn").prop("disabled", true);
+    $('#form1_id').submit();
   })
-  $(document)
   .ajaxStart(function() {
-    $("#submit_btn").prop("disabled", true);
+    $("#form1_id").disabled = true;
   })
   .ajaxComplete(function() {
-    $("#submit_btn").prop("disabled", false);
+    $("#form1_id").disabled = false;
   })
 })
 
-$(document).ready(function() {
-  $('.card_id').change(function() {
-    $('#submit_btn').submit()
-    $("#submit_btn").prop("disabled", true);
-  })
-  $(document)
-  .ajaxStart(function() {
-    $("#submit_btn").prop("disabled", true);
-  })
-  .ajaxComplete(function() {
-    $("#submit_btn").prop("disabled", false);
-  })
-})
+// $(document).ready(function() {
+//   $('.card_id').change(function() {
+//     console.log(".card_id change");
+//     $('#form1_id').submit();
+//   })
+//   .ajaxStart(function() {
+//     $("#submit_btn").prop("disabled", true);
+//   })
+//   .ajaxComplete(function() {
+//     $("#submit_btn").prop("disabled", false);
+//   })
+// })
 
 $(document).ready(function() {
   $("input[name='search_type[category]']").change(function() {
+    console.log("input[name='search_type[category] change");
     var value = $("input[name='search_type[category]']:checked").val()
     $('#page').val(1);
     if (value == 'all') {
@@ -58,32 +57,28 @@ $(document).ready(function() {
 
     prepare_load_func();
     display_load_func();
-    $('#submit_btn').submit()
-    $("#submit_btn").prop("disabled", true);
-  });
-  $(document)
+    $('#form1_id').submit();
+  })
   .ajaxStart(function() {
-    $("#submit_btn").prop("disabled", true);
+    $("#form1_id").disabled = true;
   })
   .ajaxComplete(function() {
-    $("#submit_btn").prop("disabled", false);
+    $("#form1_id").disabled = false;
   })
 })
 
 $(document).ready(function() {
   $(".select_check_box").change(function() {
+    console.log(".select_check_box change");
     $('#page').val(1);
-
     prepare_load_func();
     display_load_func();
-    $('#submit_btn').submit()
-    $("#submit_btn").prop("disabled", true);
-  });
-  $(document)
+    $('#form1_id').submit();
+  })
   .ajaxStart(function() {
-    $("#submit_btn").prop("disabled", true);
+    $("#form1_id").disabled = true;
   })
   .ajaxComplete(function() {
-    $("#submit_btn").prop("disabled", false);
+    $("#form1_id").disabled = false;
   })
 })

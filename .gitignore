@@ -40,5 +40,7 @@
 /public/download
 /public/out
 /public/card
+/public/assets/my-*
+/public/assets/application-*
 *.png
 *.jpg
