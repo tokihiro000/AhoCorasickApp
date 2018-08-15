@@ -10,17 +10,19 @@ class TrietreeController < ApplicationController
   end
 
   def near
+    p params
     # print "current page is ", params[:page], "\n"
     if params[:ajax_handler].blank?
     else
       # if params[:ajax_handler] == 'key_request'
         page = params[:page] == nil ? 1 : params[:page].to_i
-        # if page == 1
-          @request_keyword = params[:keyword]
-          @search_type = params[:search_type][:category]
-          @rarity_list = params[:rarity] == nil ? [] : params[:rarity].keys.map {|rarity| rarity.to_i}
-          @attribute_list = params[:attribute] == nil ? [] : params[:attribute].keys.map {|attribute| attribute.to_i}
-        # end
+        # ?keyword=rebekka
+        @request_keyword = params[:keyword]
+        # ?search_type[category]=all
+        @search_type = params[:search_type][:category]
+        # ?rarity[3]=true&rarity[4]=true
+        @rarity_list = params[:rarity] == nil ? [] : params[:rarity].keys.map {|rarity| rarity.to_i}
+        @attribute_list = params[:attribute] == nil ? [] : params[:attribute].keys.map {|attribute| attribute.to_i}
         ajax_action page
       # end
     end

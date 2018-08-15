@@ -1,11 +1,17 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $('.pager_link').click(function(event){
+        console.log("pushstate");
+
+        // ローディング画面表示
         prepare_load_func();
         display_load_func();
       	var target = $(event.target);
         const page_number = target[0].attributes[1].value
         $('#page').val(page_number);
+        window.history.pushState(get_history_obj_func(), null);
+
+        // 上部へスクロール
         $('body, html').animate({ scrollTop: 340 }, 50);
         Rails.fire($("#form1_id")[0], "submit");
     });

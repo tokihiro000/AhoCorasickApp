@@ -47,6 +47,8 @@
         $('#loader-bg').delay(900).fadeOut(800);
         $('#loader').delay(600).fadeOut(300);
         $('#wrap').css('display', 'block');
+        console.log(get_history_obj_func());
+        window.history.pushState(get_history_obj_func(), null);
       });
 
       //10秒たったら強制的にロード画面を非表示

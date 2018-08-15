@@ -157,7 +157,7 @@
  }
 
 #description {
-  width: 600px;
+  width: 720px;
 }
 
 #description > ul, ol{
@@ -209,7 +209,12 @@
 .check_box_group {
 }
 
-.select_check_box {
+.select_check_box_rarity {
+  margin-left: 20px;
+  position:relative;
+}
+
+.select_check_box_attribute {
   margin-left: 20px;
   position:relative;
 }

@@ -2,6 +2,8 @@
 <div id="description">
   <ul>
     <li>gang1で使われていた画像を検索・一覧表示できます</li>
+    <li>検索は部分一致検索です（レベッカと検索すればレベッカマイヤーズが出てくる）</li>
+    <li>カード名なんて知らんという人は「一覧表示」+「Sレジェンド」で眺めて楽しみましょう</li>
     <li><i class="fas fa-file-download faa-bounce animated fa-fw"></i>←このアイコンがついてる画像はクリックでダウンロードできます</li>
   </ul>
 </div>
@@ -28,7 +30,7 @@
   <label class="search_option_label">レア度でフィルタ(チェックしなければ全レア度)</label>
   <div class="display:inline-block">
     <% $ahoCorasick.rarity_set.sort.each do |rarity| %>
-      <label><%= check_box 'rarity', rarity, {:class => "select_check_box"}, true, false %>
+      <label><%= check_box 'rarity', rarity, {:class => "select_check_box_rarity"}, true, false %>
         <% rarity_str = $ahoCorasick.getRarityStr rarity %>
         <%= rarity_str %>
       </label>
@@ -40,7 +42,7 @@
   <label class="search_option_label">属性でフィルタ(チェックしなければ全属性)</label>
   <div class="check_box_group">
     <% $ahoCorasick.attribute_set.sort.each do |attribute| %>
-      <label><%= check_box 'attribute', attribute, {:class => "select_check_box"}, true, false %>
+      <label><%= check_box 'attribute', attribute, {:class => "select_check_box_attribute"}, true, false %>
         <% attribute_str = $ahoCorasick.getAttributeStr attribute %>
         <%= attribute_str %>
       </label>
