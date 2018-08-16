@@ -46,8 +46,7 @@
       $(window).load(function () { //全ての読み込みが完了したら実行
         $('#loader-bg').delay(900).fadeOut(800);
         $('#loader').delay(600).fadeOut(300);
-        $('#wrap').css('display', 'block');
-        console.log(get_history_obj_func());
+        $('#wrap').css('display', 'block');        
         window.history.pushState(get_history_obj_func(), null);
       });
 

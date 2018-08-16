@@ -31,7 +31,8 @@ get_history_obj_func = function() {
   const search_type_id = '#' + $(".select_radio_button:checked")[0].id;
   return {
     page: Number($('#page').val()),
-    keyword: $("#input-13").val();
+    keyword: $("#input-13").val(),
+    keyword_state: $("#input-13").is(':disabled'),
     search_type_id: search_type_id,
     checked_rarity_id_list: checked_rarity_id_list,
     checked_attribute_id_list: checked_attribute_id_list
@@ -39,9 +40,14 @@ get_history_obj_func = function() {
 }
 
 set_history_obj_func = function(obj) {
+  // ページ
+  const page_number = obj.page ? obj.page : 1;
+  $('#page').val(page_number);
+
   // キーワード
   $("#input-13").val(obj.keyword);
-  
+  $("#input-13").prop('disabled', obj.keyword_state);
+
   // 検索タイプ
   search_type_id = obj.search_type_id ? obj.search_type_id : "#search_type_category_card_name"
   $(search_type_id).prop("checked", true);
@@ -71,11 +77,10 @@ set_history_obj_func = function(obj) {
 $(document).ready(function() {
   $(window).on('popstate', function(e) {
       console.log("popstate");
-      console.log(e.originalEvent.state);
-
       if (e.originalEvent.state) {
-        var page_number = Number(e.originalEvent.state.page);
-        $('#page').val(page_number);
+        // var page_number = Number(e.originalEvent.state.page);
+        // $('#page').val(page_number);
+        set_history_obj_func(e.originalEvent.state);
         prepare_load_func();
         display_load_func();
         $('body, html').animate({ scrollTop: 340 }, 50);
@@ -93,6 +98,8 @@ $(document).ready(function() {
       prepare_load_func();
       display_load_func();
       $('#page').val(1);
+
+      window.history.pushState(get_history_obj_func(), null);
       $('#form1_id').submit();
   		return false;
   	}
@@ -114,6 +121,8 @@ $(document).ready(function() {
 
     prepare_load_func();
     display_load_func();
+
+    window.history.pushState(get_history_obj_func(), null);
     $('#form1_id').submit();
   })
   .ajaxStart(function() {
@@ -130,6 +139,8 @@ $(document).ready(function() {
     $('#page').val(1);
     prepare_load_func();
     display_load_func();
+
+    window.history.pushState(get_history_obj_func(), null);
     $('#form1_id').submit();
   })
   .ajaxStart(function() {
@@ -146,6 +157,8 @@ $(document).ready(function() {
     $('#page').val(1);
     prepare_load_func();
     display_load_func();
+
+    window.history.pushState(get_history_obj_func(), null);
     $('#form1_id').submit();
   })
   .ajaxStart(function() {

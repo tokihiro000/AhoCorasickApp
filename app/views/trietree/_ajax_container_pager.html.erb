@@ -7,7 +7,11 @@
         prepare_load_func();
         display_load_func();
       	var target = $(event.target);
-        const page_number = target[0].attributes[1].value
+        
+        // ブラウザ依存対応: attributes[i].value には"page_value"という文字列か
+        // ページ番号の数字がくるがブラウザによってインデックスが違うので、
+        // "pager_link"を明示的に除外
+        const page_number = target[0].innerHTML
         $('#page').val(page_number);
         window.history.pushState(get_history_obj_func(), null);
 
