@@ -31,6 +31,7 @@ get_history_obj_func = function() {
   const search_type_id = '#' + $(".select_radio_button:checked")[0].id;
   return {
     page: Number($('#page').val()),
+    keyword: $("#input-13").val();
     search_type_id: search_type_id,
     checked_rarity_id_list: checked_rarity_id_list,
     checked_attribute_id_list: checked_attribute_id_list
@@ -38,17 +39,33 @@ get_history_obj_func = function() {
 }
 
 set_history_obj_func = function(obj) {
+  // キーワード
+  $("#input-13").val(obj.keyword);
+  
   // 検索タイプ
-  $(obj.search_type_id).prop("checked", true);
+  search_type_id = obj.search_type_id ? obj.search_type_id : "#search_type_category_card_name"
+  $(search_type_id).prop("checked", true);
 
   // レア度チェック
-  obj.checked_rarity_id_list.forEach(function(v, i, a) {
-    $(v).prop("checked", true);
+  // 一旦全部消す
+  $(".select_check_box_rarity").each(function() {
+      $(this).prop("checked", false);
   });
+  if (obj.checked_rarity_id_list) {
+    obj.checked_rarity_id_list.forEach(function(v, i, a) {
+      $(v).prop("checked", true);
+    });
+  }
   // 属性チェック
-  obj.checked_attribute_id_list.forEach(function(v, i, a) {
-    $(v).prop('checked', true);
+  // 一旦全部消す
+  $(".select_check_box_attribute").each(function() {
+      $(this).prop("checked", false);
   });
+  if (obj.checked_attribute_id_list) {
+    obj.checked_attribute_id_list.forEach(function(v, i, a) {
+      $(v).prop('checked', true);
+    });
+  }
 }
 
 $(document).ready(function() {
