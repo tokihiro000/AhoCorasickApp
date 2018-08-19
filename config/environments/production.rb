@@ -23,7 +23,9 @@ Rails.application.configure do
   # config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # 静的なファイルをrailsが返すための設定
-  config.public_file_server.enabled = true
+  config.public_file_server.enabled = false
+  # 静的ファイルへのアクセスログを出すかどうか
+  config.assets.quiet = true
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
