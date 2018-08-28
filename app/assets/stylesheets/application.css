@@ -39,47 +39,6 @@
   z-index: 4;
 }
 
- #ajax-search-card {
-  font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック';
-  display:inline-block;
-  vertical-align: top;
-  width: 378px;
- }
-
- #ajax-search-card-aho {
-   font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック';
-   display:inline-block;
-   vertical-align: top;
-   width: 378px;
- }
-
- #ajax-search-card > ul, ol {
-   padding: 0;
-   position: relative;
- }
-
- #ajax-search-card > ul li {
-   color: #2d8fdd;
-   border-left: solid 6px #2d8fdd;/*左側の線*/
-   background: #f1f8ff;/*背景色*/
-   line-height: 1.5;
-   padding: 0.5em;
-   list-style-type: none!important;/*ポチ消す*/
- }
-
- #ajax-search-card > ul > .title {
-   background: #afeeee;
-   margin-bottom: 0px;
- }
-
- #ajax-search-card > ul > .info {
-   margin-bottom: 0px;
- }
-
- #ajax-search-card > ul > .info_last {
-   margin-bottom: 10px;
- }
-
  #ajax-search-card-aho > ul, ol {
    padding: 0;
    position: relative;
@@ -91,15 +50,15 @@
 }
 
 #ajax-response-wrapper {
-  /* width: 378px; */
+  /* width: 640px; */
 }
 
 #ajax-response-wrapper-div2 {
-  /* width: 378px; */
+  /* width: 640px; */
 }
 
 #ajax-response-wrapper-div3 {
-  /* width: 378px; */
+  /* width: 640px; */
 }
 
  #ajax-search-card-aho > ul li, ol li {
@@ -117,7 +76,7 @@
    display:inline-block;
    vertical-align: top;
    margin-left: 15px;
-   width: 378px;
+   width: 640px;
  }
 
  .aho-contents > ul, ol {
@@ -141,6 +100,12 @@
  }
 
  .aho-contents > ul > .info {
+   text-align: left;
+   margin-bottom: 0px;
+ }
+
+ .aho-contents > ul > .info_img {
+   height: 300px;
    text-align: left;
    margin-bottom: 0px;
  }
@@ -222,7 +187,7 @@
 .label_class {
    display:block;
    float:left;
-   width:85px;
+   width:100px;
 }
 
 .search_option_label {
@@ -231,8 +196,8 @@
 }
 
 .img_class {
-    max-width: 100%;
-    height: auto;
+    max-height: 100%;
+    width: auto;
 }
 
 .link_failure {
@@ -245,7 +210,7 @@
 
 .sprite {
     /* background: url(/assets/img/dest4.jpg) no-repeat; */
-    /* width: 378px;
+    /* width: 640px;
     height: 480px; */
     /* display: inline-block; */
     /* background-size: cover; */

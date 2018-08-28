@@ -1,49 +1,23 @@
 <% if obj != nil && obj.count > 0 %>
   <ul>
       <li class="title">
-        <font color="#191970"><label class="label_class">カード名:</label></font>
+        <font color="#191970"><label class="label_class">リソース名:</label></font>
         <%= obj["word"] %>
       </li>
-      <!-- 冠名 -->
-      <li class="info"><font color="#191970"><label class="label_class">冠名:</label></font><%= obj["crown"] %></li>
-      <!-- レア度 -->
-      <li class="info"><font color="#191970"><label class="label_class">レア度:</label></font><%= $ahoCorasick.getRarityStr obj["rarity"] %></li>
-      <!-- 属性 -->
-      <li class="info"><font color="#191970"><label class="label_class">属性:</label></font><%= $ahoCorasick.getAttributeStr obj["attribute"] %></li>
-      <!-- 説明 -->
-      <li class="comment"><%= obj["text"] == nil ? '' : obj["text"].html_safe %></li>
-
-      <!-- 大きい画像 -->
       <% if obj["path"].end_with? ".png", ".jpg", ".jpeg" %>
-        <li class="info"><font color="#191970"><label class="label_class">バナー:</label></font>
+        <li class="info"><font color="#191970"><label class="label_class">パス:</label></font>
           <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
-            <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["path"] %>
+            <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["view_path"] %>
           <% end %>
         </li>
-        <li class="info"><%= image_tag obj["path"], :class => 'img_class' %></li>
+        <li class="info_img"><%= image_tag obj["path"], :class => 'img_class' %></li>
       <% else %>
-        <li class="info"><font color="#191970"><label class="label_class">バナー:</label></font>Not Found</li>
-      <% end %>
-
-      <!-- 小さい画像  -->
-      <% if obj["small_path"].end_with? ".png", ".jpg", ".jpeg" %>
-        <li class="info"><font color="#191970"><label class="label_class">カード:</label></font>
-          <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["small_path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
-            <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["small_path"] %>
-          <% end %>
-        </li>
-        <% if obj["movie_flg"] == true %>
-          <li class="info_last">
-            <section class="section css">
-              <% path = "width: 360px; height: 480px; background: url(#{obj["small_path"]}) no-repeat; background-size: cover;" %>
-               <div class="sprite" style="<%= path %>"></div>
-            </section>
-          </li>
-        <% else %>
-          <li class="info_last"><img class="img_class" src="<%= obj["small_path"] %>"></li>
+      <li class="info"><font color="#191970"><label class="label_class">パス:</label></font>
+        <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
+          <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["view_path"] %>
         <% end %>
-      <% else %>
-        <li class="info_last"><font color="#191970"><label class="label_class">カード:</label></font>Not Found</li>
+        <li class="info_img"><%= image_tag '/ui_dummy.png', :class => 'img_class' %></li>
+      </li>
       <% end %>
   </ul>
 <% else %>

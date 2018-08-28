@@ -1,9 +1,8 @@
-<h3>gang1カード検索</h3>
+<h3>本番リソース検索</h3>
 <div id="description">
   <ul>
-    <li>gang1で使われていた画像を検索・一覧表示できます</li>
-    <li>検索は部分一致検索です（レベッカと検索すればレベッカマイヤーズが出てくる）</li>
-    <li>カード名なんて知らんという人は「一覧表示」+「Sレジェンド」で眺めて楽しみましょう</li>
+    <li>リソース名を部分一致で検索できます</li>
+    <li>hogehogehoge</li>
     <li><i class="fas fa-file-download faa-bounce animated fa-fw"></i>←このアイコンがついてる画像はクリックでダウンロードできます</li>
   </ul>
 </div>
@@ -20,35 +19,11 @@
 <div style="margin:15px">
   <label class="search_option_label">検索・一覧表示</label>
   <div class="display:inline-block">
-    <label><%= radio_button 'search_type', 'category', 'card_name', {:checked => true, :class => "select_radio_button"} %>カード名検索</label>
-    <label><%= radio_button 'search_type', 'category', 'crown', {:class => "select_radio_button"} %>冠名検索</label>
+    <label><%= radio_button 'search_type', 'category', 'card_name', {:checked => true, :class => "select_radio_button"} %>名前検索</label>
     <label><%= radio_button 'search_type', 'category', 'all', {:class => "select_radio_button"} %>一覧表示</label>
   </div>
 </div>
 
-<div style="margin:15px">
-  <label class="search_option_label">レア度でフィルタ(チェックしなければ全レア度)</label>
-  <div class="display:inline-block">
-    <% $ahoCorasick.rarity_set.sort.each do |rarity| %>
-      <label><%= check_box 'rarity', rarity, {:class => "select_check_box_rarity"}, true, false %>
-        <% rarity_str = $ahoCorasick.getRarityStr rarity %>
-        <%= rarity_str %>
-      </label>
-    <% end %>
-  </div>
-</div>
-
-<div style="margin:15px">
-  <label class="search_option_label">属性でフィルタ(チェックしなければ全属性)</label>
-  <div class="check_box_group">
-    <% $ahoCorasick.attribute_set.sort.each do |attribute| %>
-      <label><%= check_box 'attribute', attribute, {:class => "select_check_box_attribute"}, true, false %>
-        <% attribute_str = $ahoCorasick.getAttributeStr attribute %>
-        <%= attribute_str %>
-      </label>
-    <% end %>
-  </div>
-</div>
 <% end %>
 
 <div id="ajax-response">

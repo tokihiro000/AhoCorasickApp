@@ -158,48 +158,28 @@ public
     end
 
     json_data.each do |resource_path, resource_info|
-      resource_info["path"] = resource_path
+      resource_info = { "path" => resource_path }
       resource_name_list = resource_path.split("/")
       str = resource_name_list.last
-      createIndex @search_map, str, resource_info
+      if str.match(/^\..*/) == nil
+        createIndex @search_map, str, resource_info
+      end
     end
 
     make
   end
 
   def GetNearStr target, search_type, rarity_list, attribute_list, target_page
-    if target != nil && target.length != 0
-      target = target.gsub(/\[/, "\\\[")
-      target = target.gsub(/\]/, "\\\]")
-    end
-
     search_key_result = []
     if search_type == "all"
       search_key_result = @search_key_list
     elsif search_type == "card_name"
       search_key_result = @search_key_list.grep(/#{target}/)
-    else
-      crown_name_result = @crown_key_list.grep(/#{target}/)
-      crown_name_result.each do |crown|
-        @crown_name_map[crown].each do |search_key|
-          search_key_result << search_key
-        end
-      end
     end
 
     word_list = []
     search_key_result.each do |word|
       @search_map[word].each do |value|
-        rarity = value['rarity']
-        if (!rarity_list.empty?) && (!rarity_list.include? rarity)
-          next
-        end
-
-        attribute = value['attribute']
-        if (!attribute_list.empty?) && (!attribute_list.include? attribute)
-          next
-        end
-
         word_list << word
       end
     end
@@ -233,26 +213,10 @@ public
 
       count += 1
       @search_map[word].each do |value|
-        rarity = value['rarity']
-        if (!rarity_list.empty?) && (!rarity_list.include? rarity)
-          next
-        end
-
-        attribute = value['attribute']
-        if (!attribute_list.empty?) && (!attribute_list.include? attribute)
-          next
-        end
-
         store_list << {
           'word' => word,
-          'file_name' => value['file_name'],
-          'crown' => value['crown'],
-          'path' => value['path'],
-          'small_path' => value['small_path'],
-          'rarity' => rarity,
-          'attribute' => attribute,
-          'text' => value['text'],
-          'movie_flg' => value['movie_flg']
+          'path' => '/out/' + value['path'],
+          'view_path' => '/' + value['path']
         }
       end
     end
@@ -281,8 +245,8 @@ end
 $ahoCorasick = AhoCorasick.new
 # $ahoCorasick.Build 'ab', 'bc', 'bab', 'd', 'abcde'
 # $ahoCorasick.BuildFromFile 'mydata/input.txt'
-# $ahoCorasick.BuildFromResourceJson 'mydata/sample_json.json'
-$ahoCorasick.BuildFromCsv 'mydata/csv/Card_master.csv'
+$ahoCorasick.BuildFromResourceJson 'mydata/sample_json.json'
+# $ahoCorasick.BuildFromCsv 'mydata/csv/Card_master.csv'
 
 # ahoCorasick.PrintTri
 # ahoCorasick.Save
