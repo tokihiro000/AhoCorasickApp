@@ -4,10 +4,16 @@
         <font color="#191970"><label class="label_class">リソース名:</label></font>
         <%= obj["word"] %>
       </li>
+      <li class="info"><font color="#191970"><label class="label_class">zip:</label></font>
+        <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => '/download/' + obj["zip"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
+          <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["zip"] %>
+        <% end %>
+      </li>
+
       <% if obj["path"].end_with? ".png", ".jpg", ".jpeg" %>
         <li class="info"><font color="#191970"><label class="label_class">パス:</label></font>
           <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
-            <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["view_path"] %>
+            <i class="fas fa-file-download faa-bounce fa-fw"></i><span><%= obj["view_path"] %></span>
           <% end %>
         </li>
         <li class="info_img"><%= image_tag obj["path"], :class => 'img_class' %></li>

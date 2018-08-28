@@ -10,7 +10,6 @@ class TrietreeController < ApplicationController
   end
 
   def near
-    p params
     # print "current page is ", params[:page], "\n"
     if params[:ajax_handler].blank?
     else
@@ -34,7 +33,6 @@ class TrietreeController < ApplicationController
       @current_page = current_page
       @data = []
       @failure_data = []
-      @data3 = []
       @max_page = 1
 
       if @search_type == "all" || (@request_keyword != nil && @request_keyword.length != 0)
@@ -42,8 +40,7 @@ class TrietreeController < ApplicationController
         list = $ahoCorasick.GetNearStr @request_keyword, @search_type, @rarity_list, @attribute_list, @current_page
         @data = list[0]
         @failure_data = list[1]
-        @data3 = list[2]
-        @max_page = list[3]
+        @max_page = list[2]
       else
         # puts "ajax action request_keyword is nil(´・ω・)"
       end

@@ -12,13 +12,6 @@ if ($('#ajax-response-wrapper-div2').size() === 0) {
 }
 $('#ajax-response-wrapper-div2').html('<%=j render partial: "ajax_container", collection: @failure_data, :as => "obj" %>');
 
-if ($('#ajax-response-wrapper-div3').size() === 0) {
-  $('body').append('<div id="ajax-response-wrapper-div3"></div>');
-} else {
-  $('#ajax-response-wrapper-div3').html('');
-}
-$('#ajax-response-wrapper-div3').html('<%=j render partial: "ajax_container", collection: @data3, :as => "obj" %>');
-
 if ($('#common-pager').size() === 0) {
   $('body').append('<div id="common-pager"></div>');
 } else {
