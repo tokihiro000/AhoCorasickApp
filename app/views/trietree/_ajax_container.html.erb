@@ -12,18 +12,22 @@
 
       <% if obj["path"].end_with? ".png", ".jpg", ".jpeg" %>
         <li class="info"><font color="#191970"><label class="label_class">パス:</label></font>
-          <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
-            <i class="fas fa-file-download faa-bounce fa-fw"></i><span><%= obj["view_path"] %></span>
-          <% end %>
+          <div style="width:1000px">
+            <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
+              <i class="fas fa-file-download faa-bounce fa-fw"></i><span style="font-size:15px"><%= obj["view_path"] %></span>
+            <% end %>
+          </div>
         </li>
         <li class="info_img"><%= image_tag obj["path"], :class => 'img_class' %></li>
       <% else %>
       <li class="info"><font color="#191970"><label class="label_class">パス:</label></font>
-        <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
-          <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["view_path"] %>
-        <% end %>
-        <li class="info_img"><%= image_tag '/ui_dummy.png', :class => 'img_class' %></li>
+        <div style="width:1000px">
+          <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
+            <i class="fas fa-file-download faa-bounce fa-fw"></i><span style="font-size:15px"><%= obj["view_path"] %></span>
+          <% end %>
+        </div>
       </li>
+      <li class="info_img"><%= image_tag '/ui_dummy.png', :class => 'img_class' %></li>
       <% end %>
   </ul>
 <% else %>
