@@ -23,7 +23,7 @@ Rails.application.configure do
   # config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # 静的なファイルをrailsが返すための設定
-  config.public_file_server.enabled = false
+  config.public_file_server.enabled = true
   # 静的ファイルへのアクセスログを出すかどうか
   config.assets.quiet = true
 
