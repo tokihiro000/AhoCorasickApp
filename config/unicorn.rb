@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-worker_processes 4
+worker_processes 2
 
 listen File.expand_path('tmp/unicorn.sock')
 pid File.expand_path('tmp/unicorn.pid')
