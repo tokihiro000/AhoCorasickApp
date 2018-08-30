@@ -5,7 +5,7 @@ require 'nkf'
 require 'fileutils'
 
 class AhoCorasick
-  attr_accessor :enable_failure_search_word_length, :rarity_set, :attribute_set
+  attr_accessor :enable_failure_search_word_length, :rarity_set, :attribute_set, :env_str
 
   def initialize
     @search_map = {}
@@ -17,6 +17,8 @@ class AhoCorasick
     @search_time_limit = $const_info == nil ? 1.0 : $const_info["SearchTimeLimit"]
     @search_word_count = $const_info == nil ? 10 : $const_info["SearchWordCount"]
     @enable_failure_search_word_length = $const_info == nil ? 5 : $const_info["EnableFailureSearchWordLength"]
+    @env = $env_info == nil ? "undefine" : $env_info["env"]
+    @env_str = $const_info == nil ? "未定義" : $const_info[@env]["title"]
   end
 
 private
@@ -196,13 +198,16 @@ public
     count = 0
     search_result_list_1 = []
     search_result_list_2 = []
+    search_result_list_3 = []
     word_list.each do |word|
       store_list = search_result_list_1
-      case_value = count % 2
+      case_value = count % 3
       case case_value
       when 0 then
       when 1 then
         store_list = search_result_list_2
+      when 2 then
+        store_list = search_result_list_3
       else
         # どの値にも一致しない場合に行う処理
         store_list = search_result_list_1
@@ -219,7 +224,7 @@ public
       end
     end
 
-    return [search_result_list_1, search_result_list_2, max_page]
+    return [search_result_list_1, search_result_list_2, search_result_list_3, max_page]
   end
 end
 

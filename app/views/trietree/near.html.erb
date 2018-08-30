@@ -1,8 +1,8 @@
-<h3>本番リソース検索</h3>
+<h3><%= $ahoCorasick.env_str %>リソース検索</h3>
 <div id="description">
   <ul>
     <li>リソース名を部分一致で検索できます</li>
-    <li>hogehogehoge</li>
+    <li>カード名検索とか作る時間はなかった(´・ω・)</li>
     <li><i class="fas fa-file-download faa-bounce animated fa-fw"></i>←このアイコンがついてる画像はクリックでダウンロードできます</li>
   </ul>
 </div>
@@ -19,7 +19,7 @@
 <div style="margin:15px">
   <label class="search_option_label">検索・一覧表示</label>
   <div class="display:inline-block">
-    <label><%= radio_button 'search_type', 'category', 'card_name', {:checked => true, :class => "select_radio_button"} %>名前検索</label>
+    <label><%= radio_button 'search_type', 'category', 'card_name', {:checked => true, :class => "select_radio_button"} %>リソース名検索</label>
     <label><%= radio_button 'search_type', 'category', 'all', {:class => "select_radio_button"} %>一覧表示</label>
   </div>
 </div>
@@ -29,5 +29,6 @@
 <div id="ajax-response">
 <div id="ajax-response-wrapper" class="aho-contents"></div>
 <div id="ajax-response-wrapper-div2" class="aho-contents"></div>
+<div id="ajax-response-wrapper-div3" class="aho-contents"></div>
 </div>
 <div id="common-pager"></div>

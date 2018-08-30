@@ -40,7 +40,8 @@ class TrietreeController < ApplicationController
         list = $ahoCorasick.GetNearStr @request_keyword, @search_type, @rarity_list, @attribute_list, @current_page
         @data = list[0]
         @failure_data = list[1]
-        @max_page = list[2]
+        @data3 = list[2]
+        @max_page = list[3]
       else
         # puts "ajax action request_keyword is nil(´・ω・)"
       end

@@ -1,13 +1,17 @@
 <% if obj != nil && obj.count > 0 %>
   <ul>
       <li class="title">
-        <font color="#191970"><label class="label_class">リソース名:</label></font>
-        <%= obj["word"] %>
+        <div style="width:1000px">
+          <span style="color:#191970;"><label class="label_class">リソース名:</label></span>
+          <%= obj["word"] %>
+        </div>
       </li>
       <li class="info"><font color="#191970"><label class="label_class">zip:</label></font>
-        <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => '/download/' + obj["zip"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
-          <i class="fas fa-file-download faa-bounce fa-fw"></i><%= obj["zip"] %>
-        <% end %>
+        <div style="width:1000px">
+          <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => '/download/' + obj["zip"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
+            <i class="fas fa-file-download faa-bounce fa-fw"></i><span style="font-size:13px"><%= obj["zip"] %></span>
+          <% end %>
+        </div>
       </li>
 
       <% if obj["path"].end_with? ".png", ".jpg", ".jpeg" %>
@@ -23,7 +27,7 @@
       <li class="info"><font color="#191970"><label class="label_class">パス:</label></font>
         <div style="width:1000px">
           <%= link_to ({:controller => 'trietree', :action => 'download', :filetype => "resource", :path => obj["path"], :filename => obj["file_name"]}), { :class => "faa-parent animated-hover", :target => "_new" } do %>
-            <i class="fas fa-file-download faa-bounce fa-fw"></i><span style="font-size:15px"><%= obj["view_path"] %></span>
+            <i class="fas fa-file-download faa-bounce fa-fw"></i><span style="font-size:13px"><%= obj["view_path"] %></span>
           <% end %>
         </div>
       </li>
